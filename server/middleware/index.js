@@ -15,7 +15,7 @@ class Middleware {
         }
         return next();
       } catch (e) {
-        return res.status(400).json({ message: "Bad Request" });
+        return res.status(401).json({ message: "Unauthorized" });
       }
     } catch (e) {
       return res.status(500).json({ message: "Internal server error" });
