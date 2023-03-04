@@ -7,7 +7,7 @@ const LoginButton = () => {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
 
   const postBE = (token: string) => {
-    fetch("http://localhost:3001/app", { headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" } })
+    fetch("https://openaiuiapi.onrender.com/app", { headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" } })
       .then((res) => res.json())
       .then((res) => {
         console.log(res);

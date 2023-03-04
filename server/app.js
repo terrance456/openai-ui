@@ -4,9 +4,10 @@ const middleware = require("./middleware/index");
 const env = require("dotenv").config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT;
+const isProd = process.env.NODE_ENV_CURRENT === "PROD";
 
-app.use(cors());
+app.use(cors(isProd && { origin: process.env.HOST_URL }));
 
 app.use(middleware.decodeToken);
 
