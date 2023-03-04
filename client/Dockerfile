@@ -10,7 +10,7 @@ ARG NEXT_PUBLIC_CLIENT_FIREBASE_APP_ID
 
 WORKDIR /usr/app
 
-COPY . .
+COPY ./client/. .
 
 RUN touch .env.production \
     echo "NEXT_PUBLIC_CLIENT_FIREBASE_API_KEY=${NEXT_PUBLIC_CLIENT_FIREBASE_API_KEY}" >> .env.production \
