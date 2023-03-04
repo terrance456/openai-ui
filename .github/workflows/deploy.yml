@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  build-ui:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,6 +24,7 @@ jobs:
 
       - name: Build
         run: |
+          cd ./client/
           npm install
           npm run build
 
@@ -39,4 +40,4 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.AZURE_REGISTRY_ENDPOINT }}/openai:latest
-          file: ./Dockerfile
+          file: ./client/Dockerfile
