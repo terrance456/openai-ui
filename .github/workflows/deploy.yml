@@ -3,8 +3,6 @@ name: Deploy to Azure RegistryContainer
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build-ui:
