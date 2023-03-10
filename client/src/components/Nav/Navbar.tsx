@@ -12,18 +12,5 @@ export default function Navbar() {
     auth.signOut().then();
   };
 
-  return (
-    <nav className="navbar">
-      <div className="container-fluid">
-        <a className="navbar-brand text-light" href="#">
-          OpenAi UI
-        </a>
-        {!!user && (
-          <button className="btn btn-light" onClick={onLogout}>
-            Sign out
-          </button>
-        )}
-      </div>
-    </nav>
-  );
+  return <nav className="navbar">nav</nav>;
 }

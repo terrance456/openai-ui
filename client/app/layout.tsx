@@ -1,5 +1,4 @@
 import "../styles/global.scss";
-import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "@/src/components/Nav/Navbar";
 import { Poppins } from "next/font/google";
 import classNames from "classnames";
@@ -21,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>OpenAI Interface</title>
       </head>
-      <body className={classNames(poppins.className, "bg-dark")}>
+      <body className={classNames(poppins.className)}>
         <Navbar />
         {children}
       </body>

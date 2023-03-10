@@ -19,15 +19,5 @@ export default function Login() {
         alert("Login failed");
       });
   };
-  return (
-    <section className="login-container">
-      <h2 className="login-header">Login into OpenAi Ui</h2>
-      <div className="login-btns">
-        <button className="btn btn-primary" onClick={GoogleLogin}>
-          <BsGoogle /> Continue with Google
-        </button>
-        <hr />
-      </div>
-    </section>
-  );
+  return <section className="login-container">login</section>;
 }
