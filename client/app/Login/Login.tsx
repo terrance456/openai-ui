@@ -24,7 +24,10 @@ export default function Login() {
       .then((res) => {
         res.user.getIdToken().then((id: string) => {
           setIsLoading(false);
-          setCookie(id).then(() => router.push(HomeRoutes.Home));
+          setCookie(id).then(() => {
+            setIsLoading(false);
+            router.push(HomeRoutes.Home);
+          });
         });
       })
       .catch(() => {
