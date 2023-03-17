@@ -1,7 +1,7 @@
-import Login from "./home/Login/Login";
+import Login from "./Login/Login";
 import "./landing.scss";
 
-export default function Home() {
+export default function App() {
   return (
     <main className="home-container container">
       <Login />

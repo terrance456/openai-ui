@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <title>OpenAI Interface</title>
+        <title>Nexusphere AI</title>
       </head>
       <body className={classNames(poppins.className, "bg-dark")}>
         <Navbar />

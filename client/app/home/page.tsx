@@ -1,0 +1,38 @@
+"use client";
+import { ApiRoutes } from "@/constants/route";
+import { FetchHttp } from "@/src/apis";
+import { ProtectedRoute } from "@/src/components/ProtectedRoute";
+import Image from "next/image";
+import React from "react";
+import "./home.scss";
+
+const fetchHttp = new FetchHttp();
+
+export default function Home() {
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [text, setText] = React.useState("");
+
+  const fetchOpenAi = () => {
+    fetchHttp
+      .post(ApiRoutes.Query, { body: JSON.stringify({ query: text }) })
+      .then((res) => res.json())
+      .then((res) => {
+        setImageUrl(res.data[0].url);
+      });
+  };
+
+  return (
+    <ProtectedRoute>
+      <div className="home-wrapper container">
+        <form>
+          <small>Start with a detailed description</small>
+          <input type="text" className="form-control bg-dark text-light" value={text} onChange={(e) => setText(e.target.value)} />
+          <button type="button" className="btn btn-warning w-50" onClick={fetchOpenAi}>
+            next
+          </button>
+        </form>
+        {imageUrl && <Image src={imageUrl} height={500} width={500} alt="alt" />}
+      </div>
+    </ProtectedRoute>
+  );
+}

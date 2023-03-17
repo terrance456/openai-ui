@@ -16,7 +16,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container-fluid">
         <a className="navbar-brand text-light" href="#">
-          OpenAi UI
+          Nexusphere AI
         </a>
         {!!user && (
           <button className="btn btn-light" onClick={onLogout}>
