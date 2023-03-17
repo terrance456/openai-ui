@@ -1,6 +1,7 @@
 "use client";
 import { ApiRoutes } from "@/constants/route";
 import { FetchHttp } from "@/src/apis";
+import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ProtectedRoute } from "@/src/components/ProtectedRoute";
 import Image from "next/image";
 import React from "react";
@@ -11,14 +12,17 @@ const fetchHttp = new FetchHttp();
 export default function Home() {
   const [imageUrl, setImageUrl] = React.useState("");
   const [text, setText] = React.useState("");
+  const [isLoading, setisLoading] = React.useState(false);
 
   const fetchOpenAi = () => {
+    setisLoading(true);
     fetchHttp
       .post(ApiRoutes.Query, { body: JSON.stringify({ query: text }) })
       .then((res) => res.json())
       .then((res) => {
         setImageUrl(res.data[0].url);
-      });
+      })
+      .finally(() => setisLoading(false));
   };
 
   return (
@@ -31,6 +35,7 @@ export default function Home() {
             next
           </button>
         </form>
+        {isLoading && <GlobalLoader />}
         {imageUrl && <Image src={imageUrl} height={500} width={500} alt="alt" />}
       </div>
     </ProtectedRoute>
