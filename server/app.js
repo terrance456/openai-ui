@@ -22,6 +22,7 @@ app.use(middleware.decodeToken);
 app.post("/setcookie", (req, res) => {
   res.cookie("secret", req.headers?.authorization, {
     httpOnly: true,
+    sameSite: "none",
   });
   res.status(201).send("success");
 });
