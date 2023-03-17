@@ -23,6 +23,7 @@ app.post("/setcookie", (req, res) => {
   res.cookie("secret", req.headers?.authorization, {
     httpOnly: true,
     sameSite: "none",
+    secure: true,
   });
   res.status(201).send("success");
 });
