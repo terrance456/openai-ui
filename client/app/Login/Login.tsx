@@ -34,9 +34,7 @@ export default function Login() {
   };
 
   const setCookie = (token: string) => {
-    return fetchHttp.post(ApiRoutes.SetCookie, { headers: { Authorization: "Bearer " + token } }).then((res) => {
-      console.log(res.body);
-    });
+    return fetchHttp.post(ApiRoutes.SetCookie, { headers: { Authorization: "Bearer " + token } });
   };
 
   React.useEffect(() => {
