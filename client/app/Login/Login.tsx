@@ -14,7 +14,8 @@ const fetchHttp = new FetchHttp();
 
 export default function Login() {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isInit, setIsInit] = React.useState<boolean>(true);
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
@@ -23,7 +24,6 @@ export default function Login() {
     signInWithPopup(auth, googleProvider)
       .then((res) => {
         res.user.getIdToken().then((id: string) => {
-          setIsLoading(false);
           setCookie(id).then(() => {
             setIsLoading(false);
             router.push(HomeRoutes.Home);
@@ -41,10 +41,15 @@ export default function Login() {
   };
 
   React.useEffect(() => {
-    if (user) {
-      router.push(HomeRoutes.Home);
+    if (loading) {
+      return;
     }
-  }, [user, loading]);
+    if (isInit && user) {
+      router.push(HomeRoutes.Home);
+      return;
+    }
+    setIsInit(false);
+  }, [isInit, loading, user]);
 
   return (
     <section className="login-container">

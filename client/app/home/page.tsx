@@ -18,9 +18,12 @@ export default function Home() {
     setisLoading(true);
     fetchHttp
       .post(ApiRoutes.Query, { body: JSON.stringify({ query: text }) })
-      .then((res) => res.json())
       .then((res) => {
         setImageUrl(res.data[0].url);
+      })
+      .catch(async (e: Error) => {
+        const error = await (e.cause as any).json();
+        console.log(error);
       })
       .finally(() => setisLoading(false));
   };
