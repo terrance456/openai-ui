@@ -1,21 +1,18 @@
-import { CommonConfigs } from "@/constants/appConfigs";
+import { CommonConfigs } from "@/src/constants/appConfigs";
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
-export class FetchHttp {
-  private baseUrl: string = CommonConfigs.baseUrl;
+const baseUrl: string = CommonConfigs.baseUrl;
 
-  get(path: string, request?: RequestInit) {
-    return fetch(this.baseUrl + path, { ...request, headers: { ...request?.headers, "Content-Type": "application/json" }, method: "GET", credentials: "include" }).then(this.handleError);
+axios.interceptors.request.use(
+  (configs: InternalAxiosRequestConfig<any>) => {
+    configs.headers["Authorization"] = "Bearer " + localStorage.getItem("secret");
+    return configs;
+  },
+  (error) => {
+    Promise.reject(error);
   }
+);
 
-  post(path: string, request?: RequestInit) {
-    return fetch(this.baseUrl + path, { ...request, headers: { ...request?.headers, "Content-Type": "application/json" }, method: "POST", credentials: "include" }).then(this.handleError);
-  }
-
-  handleError(res: Response) {
-    if (res.ok) {
-      return res.json();
-    }
-
-    throw new Error("Error", { cause: res });
-  }
+export function postImageQuery(path: string, data?: any, config?: AxiosRequestConfig) {
+  return axios.post(baseUrl + path, data, config);
 }

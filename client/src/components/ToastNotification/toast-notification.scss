@@ -1,0 +1,15 @@
+@import "../../../styles/variables.scss";
+
+.toast-notification-wrapper {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  @include media-breakpoint-down(md) {
+    top: 0;
+    right: 0;
+    width: 100%;
+    .toast {
+      width: 100%;
+    }
+  }
+}

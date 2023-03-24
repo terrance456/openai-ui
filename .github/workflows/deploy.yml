@@ -35,7 +35,7 @@ jobs:
       - name: Build
         run: |
           cd ./client/
-          npm install --production
+          npm ci --production
           npm run build
 
       - name: Login to Azure Container registry

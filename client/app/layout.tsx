@@ -3,6 +3,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "@/src/components/Nav/Navbar";
 import { Poppins } from "next/font/google";
 import classNames from "classnames";
+import { Suspense } from "react";
+import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
+import { ToastNotificationProvider } from "@/src/contexts/ToastNotificationContext";
 
 const poppins = Poppins({
   style: "normal",
@@ -22,8 +25,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>Nexusphere AI</title>
       </head>
       <body className={classNames(poppins.className, "bg-dark")}>
-        <Navbar />
-        {children}
+        <ToastNotificationProvider>
+          <Suspense fallback={<GlobalLoader />}>
+            <Navbar />
+            {children}
+          </Suspense>
+        </ToastNotificationProvider>
       </body>
     </html>
   );

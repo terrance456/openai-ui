@@ -9,6 +9,7 @@ export default function Navbar() {
   const [user, loading] = useAuthState(auth);
 
   const onLogout = () => {
+    localStorage.removeItem("secret");
     auth.signOut().then();
   };
 
@@ -19,7 +20,7 @@ export default function Navbar() {
           Nexusphere AI
         </a>
         {!!user && (
-          <button className="btn btn-light" onClick={onLogout}>
+          <button className="btn btn-light btn-sm" onClick={onLogout}>
             Sign out
           </button>
         )}

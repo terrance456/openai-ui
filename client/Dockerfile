@@ -20,7 +20,7 @@ RUN touch .env.production \
     echo "NEXT_PUBLIC_CLIENT_FIREBASE_APP_ID=${NEXT_PUBLIC_CLIENT_FIREBASE_APP_ID}" >> .env.production \
     cat .env.production
 
-RUN npm install --production
+RUN npm ci --production
 
 RUN npm run build
 

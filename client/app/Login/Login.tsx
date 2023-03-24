@@ -5,51 +5,39 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/src/Auth/firebase";
 import { BsGoogle } from "react-icons/bs";
 import "./login.scss";
-import { FetchHttp } from "@/src/apis";
-import { ApiRoutes, HomeRoutes } from "@/constants/route";
+import { HomeRoutes } from "@/src/constants/route";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
-
-const fetchHttp = new FetchHttp();
+import { v4 as uuidv4 } from "uuid";
+import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
+import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 
 export default function Login() {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isInit, setIsInit] = React.useState<boolean>(true);
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
+  const { updateToastList } = useToastNotificationContext();
 
   const GoogleLogin = () => {
     setIsLoading(true);
     signInWithPopup(auth, googleProvider)
-      .then((res) => {
-        res.user.getIdToken().then((id: string) => {
-          setCookie(id).then(() => {
-            setIsLoading(false);
-            router.push(HomeRoutes.Home);
-          });
-        });
-      })
+      .then()
       .catch(() => {
         setIsLoading(false);
-        alert("Login failed");
+        updateToastList({ id: uuidv4(), header: "Login failed", body: "Please try again to login", type: ToastIndicatorType.WARNING });
       });
   };
 
-  const setCookie = (token: string) => {
-    return fetchHttp.post(ApiRoutes.SetCookie, { headers: { Authorization: "Bearer " + token } });
-  };
-
   React.useEffect(() => {
-    if (loading) {
+    if (user) {
+      user.getIdToken().then((id: string) => {
+        localStorage.setItem("secret", id);
+        router.push(HomeRoutes.Home);
+      });
       return;
     }
-    if (isInit && user) {
-      router.push(HomeRoutes.Home);
-      return;
-    }
-    setIsInit(false);
-  }, [isInit, loading, user]);
+  }, [user]);
 
   return (
     <section className="login-container">
