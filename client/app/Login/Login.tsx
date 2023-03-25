@@ -33,7 +33,7 @@ export default function Login() {
     if (user) {
       user.getIdToken().then((id: string) => {
         localStorage.setItem("secret", id);
-        router.push(HomeRoutes.Home);
+        router.replace(HomeRoutes.Home);
       });
       return;
     }
