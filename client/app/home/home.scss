@@ -6,19 +6,7 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  .query-wrapper {
-    margin-bottom: 3rem;
-    .text-generator {
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      button {
-        margin-left: 0.5rem;
-        font-size: 12px;
-        padding: 0.1rem 0.5rem;
-      }
-    }
-  }
+
   .example-text {
     display: flex;
     justify-content: center;
@@ -26,6 +14,21 @@
     margin-bottom: 3rem;
     small {
       color: $gray-400;
+    }
+  }
+  .result-text {
+    display: none;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    @include media-breakpoint-down(sm) {
+      display: flex;
+    }
+    small {
+      color: $gray-400;
+    }
+    hr {
+      margin-left: 0.5rem;
+      width: 100%;
     }
   }
   .preloaded-image-wrapper {

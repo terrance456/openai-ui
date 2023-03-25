@@ -1,0 +1,47 @@
+@import "../../../styles/variables.scss";
+
+.query-wrapper {
+  margin-bottom: 3rem;
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 1rem;
+  }
+  .query-text-input {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+    .text-generator {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      button {
+        margin-left: 0.5rem;
+        font-size: 12px;
+        padding: 0.1rem 0.5rem;
+      }
+    }
+  }
+  .query-text-input-mobile {
+    display: none;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    @include media-breakpoint-down(sm) {
+      display: flex;
+    }
+    small {
+      margin-bottom: 1rem;
+      color: $gray-400;
+    }
+    textarea {
+      resize: none;
+      min-height: 7.5rem;
+      padding: 0.5rem 1rem;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      border-bottom: 0;
+    }
+    button {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+}

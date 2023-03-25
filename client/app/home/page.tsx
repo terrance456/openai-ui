@@ -12,6 +12,7 @@ import randomQuery from "../../public/query-list.json";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
+import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 
 const imageArr: Array<string> = Array(9)
   .fill(null)
@@ -56,27 +57,7 @@ export default function Home() {
   return (
     <ProtectedRoute>
       <div className="home-wrapper container-fluid container-lg">
-        <div className="query-wrapper">
-          <div className="text-generator">
-            <small>Start with a detailed description</small>
-            <button className="btn btn-light btn-sm" type="button" onClick={generateRandomQuery}>
-              Enlighten me
-            </button>
-          </div>
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              value={text}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-              className="form-control bg-dark text-light shadow-sm"
-              placeholder="An Impressionist oil painting of sunflowers in a purple vase…"
-            />
-            <button className="btn btn-light" type="button" onClick={fetchOpenAi} disabled={!text}>
-              Generate!
-            </button>
-          </div>
-        </div>
-        {isLoading && <GlobalLoader />}
+        <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
         {!imageUrl && (
           <>
             <div className="example-text">
@@ -89,20 +70,26 @@ export default function Home() {
             </section>
           </>
         )}
-
         {imageUrl && (
-          <div className="query-image">
-            <Image src={imageUrl} alt="image" height={500} width={500} loading="lazy" onLoad={() => setImageLoader(false)} />
-            {imageLoader && (
-              <div className="image-loader">
-                <small>Your image is getting loaded, hang in there</small>
-                <div className="spinner-border text-light" role="status">
-                  <span className="visually-hidden">Loading...</span>
+          <>
+            <div className="result-text">
+              <small>RESULTS</small>
+              <hr />
+            </div>
+            <div className="query-image">
+              <Image src={imageUrl} alt="image" height={500} width={500} loading="lazy" onLoad={() => setImageLoader(false)} />
+              {imageLoader && (
+                <div className="image-loader">
+                  <small>Your image is getting loaded, hang in there</small>
+                  <div className="spinner-border text-light" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          </>
         )}
+        {isLoading && <GlobalLoader />}
       </div>
     </ProtectedRoute>
   );

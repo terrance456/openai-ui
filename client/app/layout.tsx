@@ -23,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <title>Nexusphere AI</title>
+        <meta name="Nexusphere AI" content="Welcome Nexusphere AI" />
       </head>
       <body className={classNames(poppins.className, "bg-dark")}>
         <ToastNotificationProvider>
