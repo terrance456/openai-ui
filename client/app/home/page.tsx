@@ -33,7 +33,6 @@ export default function Home() {
         setImageUrl(res.data.data[0].url);
       })
       .catch(({ response }: AxiosError<any>) => {
-        console.log(response?.data);
         updateToastList({
           id: uuidv4(),
           header: response?.statusText || "Error",

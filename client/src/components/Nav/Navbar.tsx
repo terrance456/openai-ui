@@ -1,29 +1,15 @@
-"use client";
-
 import React from "react";
 import "./navbar.scss";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/src/Auth/firebase";
+import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 
 export default function Navbar() {
-  const [user, loading] = useAuthState(auth);
-
-  const onLogout = () => {
-    localStorage.removeItem("secret");
-    auth.signOut().then();
-  };
-
   return (
     <nav className="navbar">
       <div className="container-fluid">
         <a className="navbar-brand text-light" href="#">
           Nexusphere AI
         </a>
-        {!!user && (
-          <button className="btn btn-light btn-sm" onClick={onLogout}>
-            Sign out
-          </button>
-        )}
+        <ProfileDropdown />
       </div>
     </nav>
   );

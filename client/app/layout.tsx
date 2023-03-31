@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { Suspense } from "react";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ToastNotificationProvider } from "@/src/contexts/ToastNotificationContext";
+import { AuthContextProvider } from "@/src/contexts/AuthContext";
 
 const poppins = Poppins({
   style: "normal",
@@ -26,12 +27,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="Nexusphere AI" content="Welcome Nexusphere AI" />
       </head>
       <body className={classNames(poppins.className, "bg-dark")}>
-        <ToastNotificationProvider>
-          <Suspense fallback={<GlobalLoader />}>
-            <Navbar />
-            {children}
-          </Suspense>
-        </ToastNotificationProvider>
+        <AuthContextProvider>
+          <ToastNotificationProvider>
+            <Suspense fallback={<GlobalLoader />}>
+              <Navbar />
+              {children}
+            </Suspense>
+          </ToastNotificationProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );

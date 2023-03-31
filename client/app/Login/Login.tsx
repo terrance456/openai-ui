@@ -1,23 +1,20 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/src/Auth/firebase";
 import { BsGoogle } from "react-icons/bs";
 import "./login.scss";
-import { HomeRoutes } from "@/src/constants/route";
-import { useAuthState } from "react-firebase-hooks/auth";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { v4 as uuidv4 } from "uuid";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
+import { useAuthContext } from "@/src/contexts/AuthContext";
 
 export default function Login() {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [user, loading] = useAuthState(auth);
-  const router = useRouter();
   const { updateToastList } = useToastNotificationContext();
+  const { loading } = useAuthContext();
 
   const GoogleLogin = () => {
     setIsLoading(true);
@@ -28,16 +25,6 @@ export default function Login() {
         updateToastList({ id: uuidv4(), header: "Login failed", body: "Please try again to login", type: ToastIndicatorType.WARNING });
       });
   };
-
-  React.useEffect(() => {
-    if (user) {
-      user.getIdToken().then((id: string) => {
-        localStorage.setItem("secret", id);
-        router.replace(HomeRoutes.Home);
-      });
-      return;
-    }
-  }, [user]);
 
   return (
     <section className="login-container">
