@@ -4,6 +4,9 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+  .toast {
+    animation: animateToast 0.5s;
+  }
   @include media-breakpoint-down(md) {
     top: 0;
     right: 0;
@@ -11,5 +14,16 @@
     .toast {
       width: 100%;
     }
+  }
+}
+
+@keyframes animateToast {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -1,3 +1,7 @@
 export interface QueryImageResponse {
-  data: Array<{ url: string }>;
+  data: Array<ResponseImagesUrlType>;
+}
+
+export interface ResponseImagesUrlType {
+  url: string;
 }

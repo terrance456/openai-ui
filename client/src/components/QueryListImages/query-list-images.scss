@@ -1,0 +1,54 @@
+@import "../../../styles/variables.scss";
+
+.query-list-images-container {
+  .result-text {
+    display: none;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    @include media-breakpoint-down(sm) {
+      display: flex;
+    }
+    small {
+      color: $gray-400;
+    }
+    hr {
+      margin-left: 0.5rem;
+      width: 100%;
+    }
+  }
+  .query-list-images-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 2rem;
+    gap: 2rem;
+    @include media-breakpoint-down(md) {
+      grid-template-columns: 1fr;
+      .query-image {
+        img {
+          max-height: 500px;
+          max-width: 500px;
+        }
+      }
+    }
+    .query-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+      }
+      .image-loader {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        small {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

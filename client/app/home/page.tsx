@@ -7,12 +7,17 @@ import { AxiosError, AxiosResponse } from "axios";
 import Image from "next/image";
 import React from "react";
 import "./home.scss";
-import { QueryImageResponse } from "@/src/types/image-query.type";
+import { QueryImageResponse, ResponseImagesUrlType } from "@/src/types/image-query.type";
 import randomQuery from "../../public/query-list.json";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
+import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
+
+export interface ImageLoaderType {
+  [key: number]: boolean;
+}
 
 const imageArr: Array<string> = Array(9)
   .fill(null)
@@ -20,17 +25,18 @@ const imageArr: Array<string> = Array(9)
   .sort(() => Math.random() - 0.5);
 
 export default function Home() {
-  const [imageUrl, setImageUrl] = React.useState<string>("");
+  const [imageUrls, setImageUrls] = React.useState<Array<ResponseImagesUrlType>>([]);
   const [text, setText] = React.useState<string>("");
   const [isLoading, setisLoading] = React.useState<boolean>(false);
-  const [imageLoader, setImageLoader] = React.useState<boolean>(false);
   const { updateToastList } = useToastNotificationContext();
+  const [imageLoaders, setImageLoaders] = React.useState<ImageLoaderType>({ 0: false, 1: false });
 
   const fetchOpenAi = () => {
     setisLoading(true);
+    setImageUrls([]);
     postImageQuery(ApiRoutes.Query, { query: text })
       .then((res: AxiosResponse<QueryImageResponse>) => {
-        setImageUrl(res.data.data[0].url);
+        setImageUrls(res.data.data);
       })
       .catch(({ response }: AxiosError<any>) => {
         updateToastList({
@@ -44,50 +50,32 @@ export default function Home() {
       })
       .finally(() => {
         setisLoading(false);
-        setImageLoader(true);
+        setImageLoaders({ 0: true, 1: true });
       });
   };
 
   const generateRandomQuery = () => {
     const queryList: Array<string> = randomQuery.data;
-    setText(queryList[Math.floor(Math.random() * 82)]);
+    setText(queryList[Math.floor(Math.random() * 40)]);
   };
 
   return (
     <ProtectedRoute>
       <div className="home-wrapper container-fluid container-lg">
         <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
-        {!imageUrl && (
+        {imageUrls.length === 0 && (
           <>
             <div className="example-text">
               <small>Few samples from OpenAi</small>
             </div>
             <section className="preloaded-image-wrapper">
               {imageArr.map((value: string, index: number) => (
-                <Image key={index} src={`/images/${value}.png`} alt="image" height={500} width={500} loading="lazy" />
+                <Image key={index} src={`/images/${value}.png`} alt="image" height={500} width={500} priority loading="eager" />
               ))}
             </section>
           </>
         )}
-        {imageUrl && (
-          <>
-            <div className="result-text">
-              <small>RESULTS</small>
-              <hr />
-            </div>
-            <div className="query-image">
-              <Image src={imageUrl} alt="image" height={500} width={500} loading="lazy" onLoad={() => setImageLoader(false)} />
-              {imageLoader && (
-                <div className="image-loader">
-                  <small>Your image is getting loaded, hang in there</small>
-                  <div className="spinner-border text-light" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </>
-        )}
+        {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}
         {isLoading && <GlobalLoader />}
       </div>
     </ProtectedRoute>

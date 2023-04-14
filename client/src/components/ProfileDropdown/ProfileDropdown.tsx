@@ -34,7 +34,7 @@ export default function ProfileDropdown() {
       return (
         <div className="profile-dropdown-container">
           <div className="profile-image" onClick={toggleProfileDropdown}>
-            <Image src={user?.photoURL as string} alt="img" height={100} width={100} />
+            <Image src={user?.photoURL as string} alt="img" height={100} width={100} priority loading="eager" />
           </div>
           <div
             className={classNames("profile-dropdown-body", { show: show })}
