@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
+import { CommonConfigs } from "@/src/constants/appConfigs";
 
 export interface ImageLoaderType {
   [key: number]: boolean;
@@ -70,7 +71,7 @@ export default function Home() {
             </div>
             <section className="preloaded-image-wrapper">
               {imageArr.map((value: string, index: number) => (
-                <Image key={index} src={`/images/${value}.png`} alt="image" height={500} width={500} priority loading="eager" />
+                <Image key={index} src={`${CommonConfigs.imagesHostUrl}/${value}.png`} alt="image" height={500} width={500} priority loading="eager" />
               ))}
             </section>
           </>

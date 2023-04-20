@@ -1,10 +1,8 @@
 "use client";
 import { User } from "firebase/auth";
-import { useRouter } from "next/navigation";
 import React, { PropsWithChildren } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../Auth/firebase";
-import { HomeRoutes } from "../constants/route";
 
 interface ContextReturnType {
   user?: User | null;
@@ -19,15 +17,12 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }: PropsWithChildren<any>) => {
   const [user, loading] = useAuthState(auth);
-  const router = useRouter();
 
   React.useEffect(() => {
     if (user) {
       user.getIdToken().then((id: string) => {
         localStorage.setItem("secret", id);
-        router.replace(HomeRoutes.Home);
       });
-      return;
     }
   }, [user]);
 

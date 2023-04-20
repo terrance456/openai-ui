@@ -23,7 +23,7 @@ function ProtectedRoute(props: ProtectedRouteProps) {
 
   const renderContent = () => {
     if (loading) {
-      return <div>loading</div>;
+      return null;
     }
     if (!user) {
       return;

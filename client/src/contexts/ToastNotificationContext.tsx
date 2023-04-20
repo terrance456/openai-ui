@@ -35,7 +35,7 @@ export const ToastNotificationProvider = ({ children }: React.PropsWithChildren<
   const autoRemoveToast = (toastInfo: ToastInfoType) => {
     return setTimeout(() => {
       removeToast(toastInfo.id);
-    }, 5000);
+    }, 7000);
   };
 
   return (

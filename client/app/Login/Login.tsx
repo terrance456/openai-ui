@@ -9,12 +9,15 @@ import { v4 as uuidv4 } from "uuid";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import { useAuthContext } from "@/src/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { HomeRoutes } from "@/src/constants/route";
 
 export default function Login() {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const { updateToastList } = useToastNotificationContext();
-  const { loading } = useAuthContext();
+  const { loading, user } = useAuthContext();
+  const router = useRouter();
 
   const GoogleLogin = () => {
     setIsLoading(true);
@@ -25,6 +28,15 @@ export default function Login() {
         updateToastList({ id: uuidv4(), header: "Login failed", body: "Please try again to login", type: ToastIndicatorType.WARNING });
       });
   };
+
+  React.useEffect(() => {
+    if (loading) {
+      return;
+    }
+    if (user) {
+      router.replace(HomeRoutes.Home);
+    }
+  }, [user, loading]);
 
   return (
     <section className="login-container">
