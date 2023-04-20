@@ -1,7 +1,7 @@
 import { CommonConfigs } from "@/src/constants/appConfigs";
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
-const baseUrl: string = CommonConfigs.baseUrl;
+const baseUrl: string = CommonConfigs.baseUrl as string;
 
 axios.interceptors.request.use(
   (configs: InternalAxiosRequestConfig<any>) => {
