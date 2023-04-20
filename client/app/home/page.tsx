@@ -4,7 +4,7 @@ import { postImageQuery } from "@/src/apis";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ProtectedRoute } from "@/src/components/ProtectedRoute";
 import { AxiosError, AxiosResponse } from "axios";
-import Image from "next/image";
+import Image, { ImageLoaderProps } from "next/image";
 import React from "react";
 import "./home.scss";
 import { QueryImageResponse, ResponseImagesUrlType } from "@/src/types/image-query.type";
@@ -60,6 +60,14 @@ export default function Home() {
     setText(queryList[Math.floor(Math.random() * 40)]);
   };
 
+  const imageKitLoader = ({ src, width, quality }: ImageLoaderProps) => {
+    let path: string = src + `?tr=w-${width}`;
+    if (quality) {
+      path = path + `,q-${quality}`;
+    }
+    return path;
+  };
+
   return (
     <ProtectedRoute>
       <div className="home-wrapper container-fluid container-lg">
@@ -71,7 +79,7 @@ export default function Home() {
             </div>
             <section className="preloaded-image-wrapper">
               {imageArr.map((value: string, index: number) => (
-                <Image key={index} src={`${CommonConfigs.imagesHostUrl}/${value}.png`} alt="image" height={500} width={500} priority loading="eager" />
+                <Image key={index} src={`${CommonConfigs.imagesHostUrl}/${value}.png`} alt="image" height={500} width={500} loader={imageKitLoader} />
               ))}
             </section>
           </>
