@@ -11,8 +11,8 @@ ARG NEXT_PUBLIC_CLIENT_IMAGE_HOST_URL
 
 WORKDIR /usr/app
 
-# COPY . .
-COPY ./client/. .
+COPY . .
+# COPY ./client/. .
 
 RUN touch .env.production \
     echo "NEXT_PUBLIC_CLIENT_FIREBASE_API_KEY=${NEXT_PUBLIC_CLIENT_FIREBASE_API_KEY}" >> .env.production \
@@ -21,8 +21,6 @@ RUN touch .env.production \
     echo "NEXT_PUBLIC_CLIENT_FIREBASE_STORAGE_BUCKET=${NEXT_PUBLIC_CLIENT_FIREBASE_STORAGE_BUCKET}" >> .env.production \
     echo "NEXT_PUBLIC_CLIENT_FIREBASE_MESSAGING_SENDER_ID=${NEXT_PUBLIC_CLIENT_FIREBASE_MESSAGING_SENDER_ID}" >> .env.production \
     echo "NEXT_PUBLIC_CLIENT_FIREBASE_APP_ID=${NEXT_PUBLIC_CLIENT_FIREBASE_APP_ID}" >> .env.production \
-    echo "NEXT_PUBLIC_CLIENT_ENDPOINT_URL=${NEXT_PUBLIC_CLIENT_ENDPOINT_URL}" >> .env.production \
-    echo "NEXT_PUBLIC_CLIENT_IMAGE_HOST_URL=${NEXT_PUBLIC_CLIENT_IMAGE_HOST_URL}" >> .env.production \
     cat .env.production
 
 RUN npm ci --production
