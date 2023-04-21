@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { auth } from "@/src/Auth/firebase";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 interface ProtectedRouteProps {
@@ -9,7 +9,6 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute(props: ProtectedRouteProps) {
-  const router = useRouter();
   const [user, loading] = useAuthState(auth);
 
   React.useEffect(() => {
@@ -17,16 +16,16 @@ function ProtectedRoute(props: ProtectedRouteProps) {
       return;
     }
     if (!user) {
-      router.push("/");
+      redirect("/");
     }
   }, [user, loading]);
 
   const renderContent = () => {
     if (loading) {
-      return null;
+      return <div />;
     }
     if (!user) {
-      return;
+      return <div />;
     }
     return props.children;
   };

@@ -79,7 +79,7 @@ export default function Home() {
             </div>
             <section className="preloaded-image-wrapper">
               {imageArr.map((value: string, index: number) => (
-                <Image key={index} src={`${CommonConfigs.imagesHostUrl}/${value}.png`} alt="image" height={500} width={500} loader={imageKitLoader} />
+                <Image key={index} src={`${CommonConfigs.imagesHostUrl}/${value}.png`} alt="image" height={500} width={500} loader={imageKitLoader} priority />
               ))}
             </section>
           </>
