@@ -1,7 +1,7 @@
+const env = require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const { z } = require("zod");
-
 const { getCredits, validateEmail, createNewCredits } = require("./firebase-queries");
 
 const UserSchema = z.object({
