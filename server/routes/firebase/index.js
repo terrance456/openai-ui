@@ -11,7 +11,7 @@ const UserSchema = z.object({
 
 router.get("/get-credits", async (req, res) => {
   const user = UserSchema.safeParse({ email: res.locals.user.email, userId: res.locals.user.uid });
-  // TODO: fix empty field
+
   if (!user.success) {
     res.status(400).json({ message: "Missing or invalid params" });
     return;
