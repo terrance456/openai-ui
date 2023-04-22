@@ -2,17 +2,13 @@ const admin = require("../../auth/firebase-config");
 const db = admin.firestore();
 
 async function validateEmail(user) {
-  console.log(process.env.FIREBASE_ADMIN_PRIVATE_KEY);
   try {
     const verifiedUser = await admin.auth().getUserByEmail(user.email);
-    console.log("success_success", verifiedUser);
-
     if (verifiedUser.uid !== user.userId) {
       return false;
     }
     return true;
   } catch (e) {
-    console.log(e);
     return false;
   }
 }

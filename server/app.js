@@ -26,5 +26,5 @@ app.use("/openai", openAiRoutes);
 app.use("/firebase", firebaseRoutes);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });
