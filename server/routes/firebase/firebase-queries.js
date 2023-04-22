@@ -5,11 +5,13 @@ const admin = require("../../auth/firebase-config");
 async function validateEmail(user) {
   try {
     const verifiedUser = await admin.auth().getUserByEmail(user.email);
+    console.log(verifiedUser);
     if (verifiedUser.uid !== user.userId) {
       return false;
     }
     return true;
   } catch (e) {
+    console.log("error_error", e);
     return false;
   }
 }
