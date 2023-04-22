@@ -8,12 +8,12 @@ import classNames from "classnames";
 import { auth } from "@/src/Auth/firebase";
 
 export default function ProfileDropdown() {
-  const { user } = useAuthContext();
+  const { user, userCredits } = useAuthContext();
   const [show, setShow] = React.useState<boolean>(false);
 
   const toggleProfileDropdown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
-    setShow(!show);
+    setShow((prevShow: boolean) => !prevShow);
   };
 
   const signOut = () => {
@@ -49,7 +49,7 @@ export default function ProfileDropdown() {
             <div className="token-info">
               <div className="credits-text">
                 <MdToken />
-                <span>0</span>
+                <span>{userCredits?.credits || 0}</span>
               </div>
               <button className="btn btn-light btn-sm">Buy credits</button>
             </div>
@@ -69,7 +69,7 @@ export default function ProfileDropdown() {
       );
     }
     return null;
-  }, [user, show]);
+  }, [user, show, userCredits]);
 
   return renderBody();
 }

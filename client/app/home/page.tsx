@@ -15,6 +15,7 @@ import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNoti
 import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
 import { CommonConfigs } from "@/src/constants/appConfigs";
+import { useAuthContext } from "@/src/contexts/AuthContext";
 
 export interface ImageLoaderType {
   [key: number]: boolean;
@@ -29,14 +30,20 @@ export default function Home() {
   const [imageUrls, setImageUrls] = React.useState<Array<ResponseImagesUrlType>>([]);
   const [text, setText] = React.useState<string>("");
   const [isLoading, setisLoading] = React.useState<boolean>(false);
-  const { updateToastList } = useToastNotificationContext();
   const [imageLoaders, setImageLoaders] = React.useState<ImageLoaderType>({ 0: false, 1: false });
+  const { updateToastList } = useToastNotificationContext();
+  const { userCredits, reduceCredits } = useAuthContext();
 
   const fetchOpenAi = () => {
+    if (userCredits.credits < 25) {
+      updateToastList({ id: uuidv4(), header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
+      return;
+    }
     setisLoading(true);
     setImageUrls([]);
     postImageQuery(ApiRoutes.Query, { query: text })
       .then((res: AxiosResponse<QueryImageResponse>) => {
+        reduceCredits();
         setImageUrls(res.data.data);
       })
       .catch(({ response }: AxiosError<any>) => {

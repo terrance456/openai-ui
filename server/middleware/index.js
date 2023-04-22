@@ -13,6 +13,7 @@ class Middleware {
         if (!verifyToken) {
           return res.status(401).json({ message: "Unauthorized" });
         }
+        res.locals.user = verifyToken;
         return next();
       } catch (e) {
         return res.status(401).json({ message: "Unauthorized" });

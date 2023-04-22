@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT;
 const openAiRoutes = require("./routes/openai");
+const firebaseRoutes = require("./routes/firebase");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +21,9 @@ app.use(middleware.decodeToken);
 
 // openai routes
 app.use("/openai", openAiRoutes);
+
+// firebase routes
+app.use("/firebase", firebaseRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

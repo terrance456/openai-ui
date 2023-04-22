@@ -5,4 +5,5 @@ export enum HomeRoutes {
 export enum ApiRoutes {
   Query = "/openai/query",
   SetCookie = "/setcookie",
+  GetCredits = "/firebase/get-credits",
 }

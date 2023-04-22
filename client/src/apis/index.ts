@@ -13,6 +13,14 @@ axios.interceptors.request.use(
   }
 );
 
+// open-ai endpoints
+
 export function postImageQuery(path: string, data?: any, config?: AxiosRequestConfig) {
   return axios.post(baseUrl + path, data, config);
+}
+
+// firebase endpoints
+
+export function getUserCredits(path: string, config?: AxiosRequestConfig) {
+  return axios.get(baseUrl + path, config);
 }

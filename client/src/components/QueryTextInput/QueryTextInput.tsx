@@ -16,7 +16,7 @@ export default function QueryTextInput(props: QueryTextInputProps) {
       return;
     }
     props.onRandomQuery();
-  }, [props.text]);
+  }, [props]);
 
   return (
     <div className="query-wrapper">
