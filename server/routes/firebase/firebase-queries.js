@@ -1,3 +1,4 @@
+const env = require("dotenv").config();
 const admin = require("../../auth/firebase-config");
 const db = admin.firestore();
 
