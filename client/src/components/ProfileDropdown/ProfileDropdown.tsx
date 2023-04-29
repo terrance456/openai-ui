@@ -6,9 +6,10 @@ import "./profile-dropdown.scss";
 import { MdToken } from "react-icons/md";
 import classNames from "classnames";
 import { auth } from "@/src/Auth/firebase";
+import Button from "../common/Button/Button";
 
 export default function ProfileDropdown() {
-  const { user, userCredits } = useAuthContext();
+  const { user, userCredits, isLoadingCredits } = useAuthContext();
   const [show, setShow] = React.useState<boolean>(false);
 
   const toggleProfileDropdown = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -17,7 +18,8 @@ export default function ProfileDropdown() {
   };
 
   const signOut = () => {
-    auth.signOut();
+    auth.signOut().then();
+    localStorage.removeItem("secret");
   };
 
   React.useEffect(() => {
@@ -47,11 +49,19 @@ export default function ProfileDropdown() {
               <small>{user.email}</small>
             </div>
             <div className="token-info">
-              <div className="credits-text">
-                <MdToken />
-                <span>{userCredits?.credits || 0}</span>
-              </div>
-              <button className="btn btn-light btn-sm">Buy credits</button>
+              {isLoadingCredits ? (
+                <p className="placeholder-glow">
+                  <span className="placeholder col-12 bg-light placeholder-lg" />
+                </p>
+              ) : (
+                <div className="credits-text">
+                  <MdToken />
+                  <span>{userCredits?.credits || 0}</span>
+                </div>
+              )}
+              <Button theme="light" size="sm">
+                Buy credits
+              </Button>
             </div>
             <div className="dropdown-button" role="button">
               Help
@@ -69,7 +79,7 @@ export default function ProfileDropdown() {
       );
     }
     return null;
-  }, [user, show, userCredits]);
+  }, [user, show, userCredits, isLoadingCredits]);
 
   return renderBody();
 }

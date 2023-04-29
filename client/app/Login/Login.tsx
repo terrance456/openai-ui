@@ -11,6 +11,7 @@ import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNoti
 import { useAuthContext } from "@/src/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { HomeRoutes } from "@/src/constants/route";
+import Button from "@/src/components/common/Button/Button";
 
 export default function Login() {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
@@ -45,9 +46,9 @@ export default function Login() {
         <h2>Nexusphere AI</h2>
       </div>
       <div className="login-btns">
-        <button className="btn btn-primary" onClick={GoogleLogin}>
+        <Button theme="primary" onClick={GoogleLogin}>
           <BsGoogle /> Continue with Google
-        </button>
+        </Button>
         <hr />
       </div>
       <small className="coming-soon">New login methods coming soon.</small>

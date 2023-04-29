@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import "./query-text-input.scss";
+import { useAuthContext } from "@/src/contexts/AuthContext";
+import Button from "../common/Button/Button";
 
 interface QueryTextInputProps {
   onRandomQuery: () => void;
@@ -10,6 +12,8 @@ interface QueryTextInputProps {
 }
 
 export default function QueryTextInput(props: QueryTextInputProps) {
+  const { isLoadingCredits } = useAuthContext();
+
   const onGenerate = React.useCallback(() => {
     if (props.text) {
       props.onSearch();
@@ -23,9 +27,9 @@ export default function QueryTextInput(props: QueryTextInputProps) {
       <div className="query-text-input">
         <div className="text-generator">
           <small>Start with a detailed description</small>
-          <button className="btn btn-light btn-sm" type="button" onClick={props.onRandomQuery}>
+          <Button theme="light" size="sm" type="button" onClick={props.onRandomQuery}>
             Enlighten me
-          </button>
+          </Button>
         </div>
         <div className="input-group mb-3">
           <input
@@ -35,17 +39,17 @@ export default function QueryTextInput(props: QueryTextInputProps) {
             className="form-control bg-dark text-light shadow-sm"
             placeholder="An Impressionist oil painting of sunflowers in a purple vase…"
           />
-          <button className="btn btn-light" type="button" onClick={props.onSearch} disabled={!props.text}>
+          <Button theme="light" type="button" onClick={props.onSearch} disabled={isLoadingCredits || !props.text} loading={isLoadingCredits}>
             Generate!
-          </button>
+          </Button>
         </div>
       </div>
       <div className="query-text-input-mobile">
         <small>Start with a detailed description</small>
         <textarea className="form-control bg-dark text-light" value={props.text} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => props.setText(e.target.value)} placeholder="An Impressionist oil painting of sunflowers in a purple vase…" />
-        <button className="btn btn-light" onClick={onGenerate}>
+        <Button theme="light" onClick={onGenerate} disabled={isLoadingCredits} loading={isLoadingCredits}>
           {props.text ? "Generate!" : "Enlighten me"}
-        </button>
+        </Button>
       </div>
     </div>
   );

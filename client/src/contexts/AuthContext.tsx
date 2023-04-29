@@ -13,6 +13,7 @@ interface ContextReturnType {
   loading: boolean;
   userCredits: CreditsType;
   reduceCredits: () => void;
+  isLoadingCredits: boolean;
 }
 
 export const AuthContext: React.Context<ContextReturnType> = React.createContext<ContextReturnType>({} as ContextReturnType);
@@ -24,11 +25,14 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }: PropsWithChildren<any>) => {
   const [user, loading] = useAuthState(auth);
   const [userCredits, setUserCredits] = React.useState<CreditsType>({ userId: "", email: "", credits: 0 });
+  const [isLoadingCredits, setIsLoadingCredits] = React.useState<boolean>(true);
 
   const fetchCredits = () => {
-    getUserCredits(ApiRoutes.GetCredits).then((res: AxiosResponse<CreditsResponseType>) => {
-      setUserCredits(res.data.userData);
-    });
+    getUserCredits(ApiRoutes.GetCredits)
+      .then((res: AxiosResponse<CreditsResponseType>) => {
+        setUserCredits(res.data.userData);
+      })
+      .finally(() => setIsLoadingCredits(false));
   };
 
   const reduceCredits = () => {
@@ -49,5 +53,5 @@ export const AuthContextProvider = ({ children }: PropsWithChildren<any>) => {
     }
   }, [user]);
 
-  return <AuthContext.Provider value={{ user, loading, userCredits, reduceCredits }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, loading, userCredits, reduceCredits, isLoadingCredits }}>{children}</AuthContext.Provider>;
 };
