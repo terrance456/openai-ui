@@ -1,11 +1,10 @@
 "use client";
+import React from "react";
 import { ApiRoutes } from "@/src/constants/route";
 import { postImageQuery } from "@/src/apis";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ProtectedRoute } from "@/src/components/ProtectedRoute";
 import { AxiosError, AxiosResponse } from "axios";
-import Image, { ImageLoaderProps } from "next/image";
-import React from "react";
 import "./home.scss";
 import { QueryImageResponse, ResponseImagesUrlType } from "@/src/types/image-query.type";
 import randomQuery from "../../public/query-list.json";
@@ -14,17 +13,12 @@ import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
-import { CommonConfigs } from "@/src/constants/appConfigs";
 import { useAuthContext } from "@/src/contexts/AuthContext";
+import ImagesSection from "@/src/components/ImagesSection/ImagesSection";
 
 export interface ImageLoaderType {
   [key: number]: boolean;
 }
-
-const imageArr: Array<string> = Array(9)
-  .fill(null)
-  .map((_, index: number) => (index + 1).toString())
-  .sort(() => Math.random() - 0.5);
 
 export default function Home() {
   const [imageUrls, setImageUrls] = React.useState<Array<ResponseImagesUrlType>>([]);
@@ -67,14 +61,6 @@ export default function Home() {
     setText(queryList[Math.floor(Math.random() * 40)]);
   };
 
-  const imageKitLoader = ({ src, width, quality }: ImageLoaderProps) => {
-    let path: string = src + `?tr=w-${width}`;
-    if (quality) {
-      path = path + `,q-${quality}`;
-    }
-    return path;
-  };
-
   return (
     <ProtectedRoute>
       <div className="home-wrapper container-fluid container-lg">
@@ -84,11 +70,7 @@ export default function Home() {
             <div className="example-text">
               <small>Few samples from OpenAi</small>
             </div>
-            <section className="preloaded-image-wrapper">
-              {imageArr.map((value: string, index: number) => (
-                <Image key={index} src={`${CommonConfigs.imagesHostUrl}/${value}.png`} alt="image" height={500} width={500} loader={imageKitLoader} priority />
-              ))}
-            </section>
+            <ImagesSection />
           </>
         )}
         {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}

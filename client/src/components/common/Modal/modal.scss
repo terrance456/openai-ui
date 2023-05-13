@@ -1,0 +1,37 @@
+@import "@/styles/variables";
+
+.custom-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .custom-modal-backdrop {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  .custom-modal-content {
+    position: absolute;
+    padding: 1rem;
+
+    &.left {
+      left: 0;
+      height: 100%;
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+    }
+    &.right {
+      right: 0;
+      height: 100%;
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+    }
+  }
+}

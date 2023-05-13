@@ -1,0 +1,31 @@
+@import "@/styles/variables";
+
+.image-overlay-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .image-overlay {
+    visibility: hidden;
+    cursor: pointer;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.3s ease;
+    p {
+      font-size: 0.875rem;
+    }
+  }
+
+  &:hover {
+    .image-overlay {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.3 ease;
+    }
+  }
+}

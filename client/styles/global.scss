@@ -14,3 +14,7 @@ body {
   flex-direction: column;
   position: relative;
 }
+
+body.disable-scroll {
+  overflow: hidden;
+}
