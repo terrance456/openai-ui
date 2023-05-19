@@ -23,7 +23,7 @@ export default function QueryListImages({ list, imageLoaders, setImageLoaders }:
       <div className="query-list-images-wrapper">
         {list.map((value: ResponseImagesUrlType, index: number) => (
           <div className="query-image" key={index}>
-            <Image src={value.url} alt="image" height={500} width={500} priority loading="eager" onLoadingComplete={() => onLoad(index)} />
+            <Image src={value.url} alt="image" height={1024} width={1024} priority loading="eager" onLoadingComplete={() => onLoad(index)} />
             {imageLoaders[index] && (
               <div className="image-loader">
                 <small>Your image is getting loaded, hang in there</small>

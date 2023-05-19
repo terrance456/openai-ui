@@ -41,13 +41,13 @@ export default function ImagesSection() {
   return (
     <section className="preloaded-image-wrapper">
       {imageList.slice(0, isTablet ? 10 : 9).map((list: ImageListType, index: number) => (
-        <ImageOverlay key={index} src={`${CommonConfigs.imagesHostUrl}/${list.path}`} alt="image" height={500} width={500} loader={imageKitLoader} priority description={list.description} onClickImage={onClickImage} index={index} />
+        <ImageOverlay key={index} src={`${CommonConfigs.imagesHostUrl}/${list.path}`} alt="image" height={1024} width={1024} loader={imageKitLoader} priority description={list.description} onClickImage={onClickImage} index={index} />
       ))}
       {imageModal && (
         <Modal toggle onClose={onCloseModal} className="preloaded-image-modal">
           <div className="modal-body">
             <div className="custom-card">
-              {currentImg && <Image src={`${CommonConfigs.imagesHostUrl}/${currentImg.path}`} alt="image" height={500} width={500} loader={imageKitLoader} priority />}
+              {currentImg && <Image src={`${CommonConfigs.imagesHostUrl}/${currentImg.path}`} alt="image" height={1024} width={1024} loader={imageKitLoader} priority />}
               <div className="custom-card-body">
                 <p>{currentImg?.description}</p>
                 <Button theme="light">Try this example</Button>
