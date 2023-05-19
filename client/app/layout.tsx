@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ToastNotificationProvider } from "@/src/contexts/ToastNotificationContext";
 import { AuthContextProvider } from "@/src/contexts/AuthContext";
+import Favicon from "./favicon.ico";
 
 const poppins = Poppins({
   style: "normal",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>Nexusphere AI</title>
         <meta name="Nexusphere AI" content="Welcome Nexusphere AI" />
+        <link rel="icon" href={Favicon.src} />
       </head>
       <body className={classNames(poppins.className, "bg-dark")}>
         <AuthContextProvider>

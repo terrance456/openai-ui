@@ -28,4 +28,10 @@
       transition: opacity 0.3 ease;
     }
   }
+
+  @media (hover: none) {
+    .image-overlay {
+      display: none;
+    }
+  }
 }
