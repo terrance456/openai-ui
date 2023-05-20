@@ -1,5 +1,3 @@
-import "../styles/global.scss";
-import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "@/src/components/Nav/Navbar";
 import { Poppins } from "next/font/google";
 import classNames from "classnames";
@@ -7,7 +5,8 @@ import { Suspense } from "react";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ToastNotificationProvider } from "@/src/contexts/ToastNotificationContext";
 import { AuthContextProvider } from "@/src/contexts/AuthContext";
-import Favicon from "./favicon.ico";
+import "../styles/global.scss";
+import "bootstrap/dist/css/bootstrap.css";
 
 const poppins = Poppins({
   style: "normal",
@@ -16,18 +15,13 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Nexusphere AI",
+  title: "Nexusphere AI asdasd",
   description: "Welcome Nexusphere AI",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <title>Nexusphere AI</title>
-        <meta name="Nexusphere AI" content="Welcome Nexusphere AI" />
-        <link rel="icon" href={Favicon.src} />
-      </head>
       <body className={classNames(poppins.className, "bg-dark")}>
         <AuthContextProvider>
           <ToastNotificationProvider>

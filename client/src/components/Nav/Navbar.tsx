@@ -1,10 +1,10 @@
 import React from "react";
-import "./navbar.scss";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
+import "./navbar.scss";
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
+    <nav className="navbar p-3">
       <div className="container-fluid">
         <a className="navbar-brand text-light" href="#">
           Nexusphere AI
