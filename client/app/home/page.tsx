@@ -24,37 +24,43 @@ export default function Home() {
   const [imageUrls, setImageUrls] = React.useState<Array<ResponseImagesUrlType>>([]);
   const [text, setText] = React.useState<string>("");
   const [isLoading, setisLoading] = React.useState<boolean>(false);
-  const [imageLoaders, setImageLoaders] = React.useState<ImageLoaderType>({ 0: false, 1: false });
+  const [imageLoaders, setImageLoaders] = React.useState<ImageLoaderType>({});
   const { updateToastList } = useToastNotificationContext();
   const { userCredits, reduceCredits } = useAuthContext();
 
-  const fetchOpenAi = () => {
-    if (userCredits.credits < 25) {
-      updateToastList({ id: uuidv4(), header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
-      return;
-    }
-    setisLoading(true);
-    setImageUrls([]);
-    postImageQuery(ApiRoutes.Query, { query: text })
-      .then((res: AxiosResponse<QueryImageResponse>) => {
-        reduceCredits();
-        setImageUrls(res.data.data);
-      })
-      .catch(({ response }: AxiosError<any>) => {
-        updateToastList({
-          id: uuidv4(),
-          header: response?.statusText || "Error",
-          subHeader: response?.status?.toString(),
-          body: response?.data?.message || response?.data?.error?.message || "Error, please retry",
-          type: ToastIndicatorType.DANGER,
-          className: "text-light",
+  const fetchOpenAi = React.useCallback(
+    (payload: string) => {
+      if (!payload) {
+        return;
+      }
+      if (userCredits.credits < 25) {
+        updateToastList({ id: uuidv4(), header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
+        return;
+      }
+      setisLoading(true);
+      setImageUrls([]);
+      postImageQuery(ApiRoutes.Query, { query: payload })
+        .then((res: AxiosResponse<QueryImageResponse>) => {
+          reduceCredits();
+          setImageUrls(res.data.data);
+          setImageLoaders({ 0: true, 1: true, 2: true, 3: true });
+        })
+        .catch(({ response }: AxiosError<any>) => {
+          updateToastList({
+            id: uuidv4(),
+            header: response?.statusText || "Error",
+            subHeader: response?.status?.toString(),
+            body: response?.data?.message || response?.data?.error?.message || "Error, please retry",
+            type: ToastIndicatorType.DANGER,
+            className: "text-light",
+          });
+        })
+        .finally(() => {
+          setisLoading(false);
         });
-      })
-      .finally(() => {
-        setisLoading(false);
-        setImageLoaders({ 0: true, 1: true });
-      });
-  };
+    },
+    [userCredits.credits, reduceCredits, updateToastList]
+  );
 
   const generateRandomQuery = () => {
     const queryList: Array<string> = randomQuery.data;
@@ -70,7 +76,7 @@ export default function Home() {
             <div className="example-text">
               <small>Few samples from OpenAi</small>
             </div>
-            <ImagesSection />
+            <ImagesSection onClickExample={fetchOpenAi} />
           </>
         )}
         {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}

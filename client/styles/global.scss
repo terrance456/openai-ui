@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 * {
   margin: 0;
   padding: 0;
@@ -17,4 +19,16 @@ body {
 
 body.disable-scroll {
   overflow: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: $gray-700;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: $gray-500;
 }

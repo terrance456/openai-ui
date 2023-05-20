@@ -10,10 +10,11 @@ interface QueryListImagesProps {
   setImageLoaders: React.Dispatch<React.SetStateAction<ImageLoaderType>>;
 }
 
-export default function QueryListImages({ list, imageLoaders, setImageLoaders }: QueryListImagesProps) {
+export default React.memo(function QueryListImages({ list, imageLoaders, setImageLoaders }: QueryListImagesProps) {
   const onLoad = (index: number) => {
     setImageLoaders((prevLoaders: ImageLoaderType) => ({ ...prevLoaders, [index]: false }));
   };
+
   return (
     <section className="query-list-images-container">
       <div className="result-text">
@@ -37,4 +38,4 @@ export default function QueryListImages({ list, imageLoaders, setImageLoaders }:
       </div>
     </section>
   );
-}
+});

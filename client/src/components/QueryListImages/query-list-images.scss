@@ -18,11 +18,11 @@
   }
   .query-list-images-wrapper {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     margin-bottom: 2rem;
-    gap: 2rem;
+    gap: 1rem;
     @include media-breakpoint-down(md) {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       .query-image {
         img {
           max-height: 500px;
@@ -34,6 +34,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
       img {
         height: auto;
         width: 100%;
@@ -47,6 +48,7 @@
         flex-direction: column;
         small {
           margin-bottom: 1rem;
+          text-align: center;
         }
       }
     }

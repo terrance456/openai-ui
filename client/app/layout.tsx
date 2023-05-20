@@ -15,7 +15,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Nexusphere AI asdasd",
+  title: "Nexusphere AI",
   description: "Welcome Nexusphere AI",
 };
 

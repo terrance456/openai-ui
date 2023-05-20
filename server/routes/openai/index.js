@@ -37,7 +37,7 @@ module.exports = router;
 function queryImageOpenAi(query) {
   const configuration = new Configuration({ apiKey: process.env.OPENAPI_API_KEY });
   const openai = new OpenAIApi(configuration);
-  return openai.createImage({ prompt: query, n: 2, size: "1024x1024" });
+  return openai.createImage({ prompt: query, n: 4, size: "1024x1024" });
 }
 
 async function validateCredits(user) {

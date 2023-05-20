@@ -8,15 +8,22 @@ interface QueryTextInputProps {
   onRandomQuery: () => void;
   setText: React.Dispatch<React.SetStateAction<string>>;
   text: string;
-  onSearch: () => void;
+  onSearch: (text: string) => void;
 }
 
 export default function QueryTextInput(props: QueryTextInputProps) {
   const { isLoadingCredits } = useAuthContext();
 
+  const onSearch = () => {
+    if (props.text) {
+      props.onSearch(props.text);
+      return;
+    }
+  };
+
   const onGenerate = React.useCallback(() => {
     if (props.text) {
-      props.onSearch();
+      props.onSearch(props.text);
       return;
     }
     props.onRandomQuery();
@@ -39,7 +46,7 @@ export default function QueryTextInput(props: QueryTextInputProps) {
             className="form-control bg-dark text-light shadow-sm"
             placeholder="An Impressionist oil painting of sunflowers in a purple vase…"
           />
-          <Button theme="light" type="button" onClick={props.onSearch} disabled={isLoadingCredits || !props.text} loading={isLoadingCredits}>
+          <Button theme="light" type="button" onClick={onSearch} disabled={isLoadingCredits || !props.text} loading={isLoadingCredits}>
             Generate!
           </Button>
         </div>

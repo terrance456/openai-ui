@@ -14,9 +14,13 @@ interface ImageListType {
   description: string;
 }
 
+interface ImagesSectionProps {
+  onClickExample: (text: string) => void;
+}
+
 const imageList: Array<ImageListType> = ImagesList.sort(() => Math.random() - 0.5);
 
-export default function ImagesSection() {
+export default React.memo(function ImagesSection(props: ImagesSectionProps) {
   const isTablet: boolean = useMediaQuery({ maxWidth: 768 });
   const [imageModal, setImageModal] = React.useState<boolean>(false);
   const [currentImg, setCurrentImg] = React.useState<ImageListType>();
@@ -38,6 +42,11 @@ export default function ImagesSection() {
     setImageModal(false);
   };
 
+  const onClickExample = (text: string) => {
+    setImageModal(false);
+    props.onClickExample(text);
+  };
+
   return (
     <section className="preloaded-image-wrapper">
       {imageList.slice(0, isTablet ? 10 : 9).map((list: ImageListType, index: number) => (
@@ -50,7 +59,9 @@ export default function ImagesSection() {
               {currentImg && <Image src={`${CommonConfigs.imagesHostUrl}/${currentImg.path}`} alt="image" height={1024} width={1024} loader={imageKitLoader} priority />}
               <div className="custom-card-body">
                 <p>{currentImg?.description}</p>
-                <Button theme="light">Try this example</Button>
+                <Button theme="light" onClick={() => onClickExample(currentImg?.description as string)}>
+                  Try this example
+                </Button>
               </div>
             </div>
           </div>
@@ -58,4 +69,4 @@ export default function ImagesSection() {
       )}
     </section>
   );
-}
+});
