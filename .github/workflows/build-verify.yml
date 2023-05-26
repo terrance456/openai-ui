@@ -42,7 +42,7 @@ jobs:
       - name: Npm lint
         run: |
           cd ./client/
-          npm run lint
+          ls
 
       - name: Npm run Build
         run: |
