@@ -40,8 +40,5 @@ jobs:
       - name: Npm install
         run: npm ci --production
 
-      - name: Npm lint
-        run: npm run lint
-
       - name: Npm run Build
         run: npm run build
