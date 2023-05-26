@@ -39,6 +39,11 @@ jobs:
           cd ./client/
           npm ci --production
 
+      - name: Npm lint
+        run: |
+          cd ./client/
+          npm run lint
+
       - name: Npm run Build
         run: |
           cd ./client/
