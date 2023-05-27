@@ -1,9 +1,7 @@
-"use client";
 import React from "react";
 import "./download-overlay.scss";
 import Button from "../Button/Button";
 import { TbDownload } from "react-icons/tb";
-import { saveAs } from "file-saver";
 
 interface DownloadOverlayProps {
   url: string;
