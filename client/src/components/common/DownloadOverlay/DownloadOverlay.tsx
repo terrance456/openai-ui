@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import "./download-overlay.scss";
 import Button from "../Button/Button";
