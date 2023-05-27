@@ -1,7 +1,9 @@
-const admin = require("../../auth/firebase-config");
+import { admin } from "../../auth/firebase-config";
+import { CreditsType, UserType } from "./type";
+
 const db = admin.firestore();
 
-async function validateEmail(user) {
+export async function validateEmail(user: UserType) {
   try {
     const verifiedUser = await admin.auth().getUserByEmail(user.email);
     if (verifiedUser.uid !== user.userId) {
@@ -13,16 +15,14 @@ async function validateEmail(user) {
   }
 }
 
-function getCredits(user) {
+export function getCredits(user: UserType) {
   return db.collection("users").where("userId", "==", user.userId).where("email", "==", user.email).get();
 }
 
-function createNewCredits(user) {
+export function createNewCredits(user: UserType) {
   return db.collection("users").add(user);
 }
 
-async function updateCredits(ref, credits) {
+export async function updateCredits(ref: any, credits: CreditsType) {
   return db.collection("users").doc(ref.id).update(credits);
 }
-
-module.exports = { validateEmail, getCredits, createNewCredits, updateCredits };

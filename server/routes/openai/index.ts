@@ -1,9 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const { Configuration, OpenAIApi } = require("openai");
-const { getCredits, updateCredits } = require("../firebase/firebase-queries");
+import express, { Request, Response } from "express";
+import { UserType } from "../firebase/type";
+import { getCredits, updateCredits } from "../firebase/firebase-queries";
+import { Configuration, OpenAIApi } from "openai";
 
-router.post("/query", async (req, res) => {
+const router = express.Router();
+
+router.post("/query", async (req: Request, res: Response) => {
   const userCredits = await validateCredits({ userId: res.locals.user.uid, email: res.locals.user.email });
 
   if (userCredits.length === 0) {
@@ -11,7 +13,8 @@ router.post("/query", async (req, res) => {
     return;
   }
 
-  const availableCredits = userCredits[0].data().credits;
+  const availableCredits: number = userCredits[0].data().credits;
+
   if (availableCredits < 25) {
     res.status(402).json({ message: "Insufficient credits, please purchase more credits to make more queries" });
     return;
@@ -32,15 +35,15 @@ router.post("/query", async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;
 
-function queryImageOpenAi(query) {
+function queryImageOpenAi(query: string) {
   const configuration = new Configuration({ apiKey: process.env.OPENAPI_API_KEY });
   const openai = new OpenAIApi(configuration);
   return openai.createImage({ prompt: query, n: 4, size: "1024x1024" });
 }
 
-async function validateCredits(user) {
+async function validateCredits(user: UserType) {
   try {
     const storeResponse = await getCredits(user);
     return storeResponse.docs;

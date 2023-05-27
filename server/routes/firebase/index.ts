@@ -1,15 +1,18 @@
-const env = require("dotenv").config();
-const express = require("express");
-const router = express.Router();
-const { z } = require("zod");
-const { getCredits, validateEmail, createNewCredits } = require("./firebase-queries");
+import express, { Router, Request, Response } from "express";
+import { z } from "zod";
+import dotenv from "dotenv";
+import { validateEmail, getCredits, createNewCredits } from "./firebase-queries";
+
+dotenv.config();
+
+const router: Router = express.Router();
 
 const UserSchema = z.object({
   email: z.string().email(),
   userId: z.string().nonempty(),
 });
 
-router.get("/get-credits", async (req, res) => {
+router.get("/get-credits", async (req: Request, res: Response) => {
   const user = UserSchema.safeParse({ email: res.locals.user.email, userId: res.locals.user.uid });
 
   if (!user.success) {
@@ -38,4 +41,4 @@ router.get("/get-credits", async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;
