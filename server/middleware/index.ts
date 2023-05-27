@@ -1,7 +1,8 @@
-const admin = require("../auth/firebase-config");
+import { Request, Response, NextFunction } from "express";
+import { admin } from "../auth/firebase-config";
 
-class Middleware {
-  async decodeToken(req, res, next) {
+export class Middleware {
+  async decodeToken(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.headers?.authorization?.split(" ")[1];
       if (!token) {
@@ -23,5 +24,3 @@ class Middleware {
     }
   }
 }
-
-module.exports = new Middleware();
