@@ -17,7 +17,7 @@ const serviceAccount = {
 };
 
 if (admin.apps.length === 0) {
-  admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount) });
+  admin.initializeApp({ credential: admin.credential.cert(serviceAccount as admin.ServiceAccount), storageBucket: process.env.FIREBASE_ADMIN_BUCKET });
 }
 
 export { admin };

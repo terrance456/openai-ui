@@ -2,6 +2,7 @@ import express, { Router, Request, Response } from "express";
 import { z } from "zod";
 import dotenv from "dotenv";
 import { validateEmail, getCredits, createNewCredits } from "./firebase-queries";
+import { NewUserType } from "./type";
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ router.get("/get-credits", async (req: Request, res: Response) => {
   getCredits(user.data)
     .then((storeResponse) => {
       if (storeResponse?.docs?.length === 0) {
-        const newUser = { ...user.data, credits: 50 };
+        const newUser: NewUserType = { ...user.data, credits: 50, image_list: [] };
         createNewCredits(newUser).then(() => {
           res.status(200).json({ userData: newUser });
         });
