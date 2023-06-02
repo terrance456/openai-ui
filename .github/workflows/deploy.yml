@@ -1,8 +1,6 @@
 name: Deploy to Azure RegistryContainer
 
-on:
-  push:
-    branches: [] #add branch
+on: workflow_dispatch #add branch
 
 jobs:
   build-ui:
