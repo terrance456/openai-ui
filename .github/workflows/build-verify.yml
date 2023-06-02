@@ -2,7 +2,7 @@ name: Build verify
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: [] #add branch
 
 jobs:
   build-ui:
