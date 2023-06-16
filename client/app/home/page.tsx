@@ -6,7 +6,7 @@ import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ProtectedRoute } from "@/src/components/ProtectedRoute";
 import { AxiosError, AxiosResponse } from "axios";
 import "./home.scss";
-import { QueryImageResponse, ResponseImagesUrlType } from "@/src/types/image-query.type";
+import { ResponseImagesUrlType } from "@/src/types/image-query.type";
 import randomQuery from "../../public/query-list.json";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { v4 as uuidv4 } from "uuid";
@@ -40,9 +40,9 @@ export default function Home() {
       setisLoading(true);
       setImageUrls([]);
       postImageQuery(ApiRoutes.Query, { query: payload })
-        .then((res: AxiosResponse<QueryImageResponse>) => {
+        .then((res: AxiosResponse<Array<ResponseImagesUrlType>>) => {
           reduceCredits();
-          setImageUrls(res.data.data);
+          setImageUrls(res.data);
           setImageLoaders({ 0: true, 1: true, 2: true, 3: true });
         })
         .catch(({ response }: AxiosError<any>) => {

@@ -28,7 +28,7 @@ router.post("/query", async (req: Request, res: Response) => {
             userCredits[0].ref,
             newImageList.map((v: ImageListType) => v.id)
           );
-          res.status(200).json(openAiRes.data);
+          res.status(200).json(newImageList);
         })
         .catch(() => {
           res.status(500).json({ message: "Please try again later" });

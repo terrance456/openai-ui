@@ -3,6 +3,7 @@ import { z } from "zod";
 import dotenv from "dotenv";
 import { validateEmail, getCredits, createNewCredits } from "./firebase-queries";
 import { NewUserType } from "./type";
+import { formatUserInformation } from "./utils";
 
 dotenv.config();
 
@@ -35,7 +36,7 @@ router.get("/get-credits", async (req: Request, res: Response) => {
         });
         return;
       }
-      res.status(200).json({ userData: storeResponse?.docs[0]?.data() || {} });
+      res.status(200).json({ userData: formatUserInformation(storeResponse?.docs[0]?.data()) });
     })
     .catch((e) => {
       res.status(400).json({ message: "Could not retrive credits" });
