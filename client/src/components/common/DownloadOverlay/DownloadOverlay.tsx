@@ -4,8 +4,8 @@ import Button from "../Button/Button";
 import { TbDownload } from "react-icons/tb";
 
 interface DownloadOverlayProps {
-  url: string;
   isLoading?: boolean;
+  onDownload: () => void;
 }
 
 export default function DownloadOverlay(props: React.PropsWithChildren<DownloadOverlayProps>) {
@@ -13,7 +13,7 @@ export default function DownloadOverlay(props: React.PropsWithChildren<DownloadO
     <div className="download-overlay">
       {props.children}
       {!props.isLoading && (
-        <Button className="download-btn" size="sm" theme="light">
+        <Button className="download-btn" size="sm" theme="light" onClick={props.onDownload}>
           <TbDownload />
         </Button>
       )}

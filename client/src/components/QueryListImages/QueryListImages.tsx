@@ -4,6 +4,8 @@ import Image from "next/image";
 import "./query-list-images.scss";
 import { ImageLoaderType } from "@/app/home/page";
 import DownloadOverlay from "../common/DownloadOverlay/DownloadOverlay";
+import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
+import { fetchImage } from "@/src/utils/image-downloader";
 
 interface QueryListImagesProps {
   list: Array<ResponseImagesUrlType>;
@@ -12,8 +14,13 @@ interface QueryListImagesProps {
 }
 
 export default React.memo(function QueryListImages({ list, imageLoaders, setImageLoaders }: QueryListImagesProps) {
+  const { updateToastList } = useToastNotificationContext();
   const onLoad = (index: number) => {
     setImageLoaders((prevLoaders: ImageLoaderType) => ({ ...prevLoaders, [index]: false }));
+  };
+
+  const onImageDownload = async (imageId: string) => {
+    fetchImage(imageId, updateToastList);
   };
 
   return (
@@ -24,7 +31,7 @@ export default React.memo(function QueryListImages({ list, imageLoaders, setImag
       </div>
       <div className="query-list-images-wrapper">
         {list.map((value: ResponseImagesUrlType, index: number) => (
-          <DownloadOverlay key={index} url={value.url} isLoading={imageLoaders[index]}>
+          <DownloadOverlay key={index} isLoading={imageLoaders[index]} onDownload={() => onImageDownload(value.id)}>
             <div className="query-image">
               <Image src={value.url} alt="image" height={1024} width={1024} priority loading="eager" onLoadingComplete={() => onLoad(index)} />
               {imageLoaders[index] && (
