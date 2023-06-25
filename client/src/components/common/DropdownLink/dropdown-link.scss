@@ -1,0 +1,25 @@
+@import "@/styles/variables";
+
+.dropdown {
+  > button {
+    padding: 0 0.5rem;
+  }
+  .dropdown-menu {
+    background-color: $gray-700;
+    transform: translateX(-80%);
+    > li {
+      > .dropdown-item {
+        color: $gray-100;
+        &:hover {
+          background-color: $gray-600;
+        }
+        &:focus {
+          background-color: $gray-600;
+        }
+      }
+      > .is-selected {
+        background-color: $purple-400;
+      }
+    }
+  }
+}
