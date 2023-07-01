@@ -1,10 +1,10 @@
 import React from "react";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
-import "./navbar.scss";
 import Link from "next/link";
 import LinkMenu from "../common/LinkMenu/LinkMenu";
 import { HomeRoutes } from "@/src/constants/route";
 import { FaReact } from "react-icons/fa";
+import "./navbar.scss";
 
 export default function Navbar() {
   return (

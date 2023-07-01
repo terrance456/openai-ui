@@ -18,6 +18,16 @@ export async function fetchImage(imageId: string, toastCallback: (toastInfo: Toa
   }
 }
 
+export const downloadHistoryImage = async (url: string, toastCallback: (toastInfo: ToastInfoType) => void) => {
+  try {
+    const imageBlob: Blob = await fetchImageBlob(url);
+    downloadImage(URL.createObjectURL(imageBlob));
+  } catch (error) {
+    const newError: ErrorReturnType = error as ErrorReturnType;
+    toastCallback({ id: uuidv4(), header: "Download failed", body: newError.errorText, type: ToastIndicatorType.WARNING });
+  }
+};
+
 const fetchImageBlob = async (imageUrl: string) => {
   try {
     const imageRes: AxiosResponse = await axios.get(imageUrl, { responseType: "blob" });
