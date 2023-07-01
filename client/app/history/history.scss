@@ -1,0 +1,28 @@
+@import "@/styles/variables";
+
+.history-container {
+  display: flex;
+  flex-direction: column;
+  color: $white;
+  padding-top: 3rem;
+  .history-images {
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    img {
+      height: auto;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .history-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+}

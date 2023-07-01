@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { ImageListType, UserType } from "../firebase/type";
-import { getCredits, updateCredits, updateImageListIDs } from "../firebase/firebase-queries";
+import { getUserInformation, updateCredits, updateImageListIDs } from "../firebase/firebase-queries";
 import { Configuration, OpenAIApi } from "openai";
 import { downloadImages } from "./download-image";
 import { v4 as uuidv4 } from "uuid";
@@ -49,7 +49,7 @@ function queryImageOpenAi(query: string) {
 
 async function validateCredits(user: UserType) {
   try {
-    const storeResponse = await getCredits(user);
+    const storeResponse = await getUserInformation(user);
     return storeResponse.docs;
   } catch (e) {
     return [];

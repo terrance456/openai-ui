@@ -1,0 +1,27 @@
+@import "@/styles/variables";
+
+.link-menu-wrapper {
+  .link-menus {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > li {
+      > a {
+        color: $gray-500;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .is-selected {
+        color: $gray-100;
+        border-bottom: 3px solid $purple-300;
+        padding: 0.3rem;
+      }
+      &:not(:last-of-type) {
+        margin-right: 1rem;
+      }
+    }
+  }
+}

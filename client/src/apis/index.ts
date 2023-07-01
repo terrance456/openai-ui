@@ -23,3 +23,8 @@ export function postImageQuery(path: string, data?: any, config?: AxiosRequestCo
 export function getUserCredits(path: string, config?: AxiosRequestConfig) {
   return axios.get(baseUrl + path, config);
 }
+
+// firebase endpoints
+export function getImagesIds(path: string, config?: AxiosRequestConfig) {
+  return axios.get(baseUrl + path, config);
+}

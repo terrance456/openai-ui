@@ -21,6 +21,7 @@ export const ToastNotificationProvider = ({ children }: React.PropsWithChildren<
     timerRef.current[toastInfo.id] = autoRemoveToast(toastInfo);
     setToastList((toastData: Array<ToastInfoType>) => [...toastData, toastInfo]);
   };
+
   const removeToast = (id: string) => {
     const timerId: NodeJS.Timeout = timerRef.current[id];
     if (typeof timerId !== "undefined") {

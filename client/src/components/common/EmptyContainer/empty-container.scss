@@ -1,0 +1,19 @@
+@import "@/styles/variables";
+
+.empty-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  > svg {
+    height: auto;
+    max-height: 20rem;
+  }
+  > p {
+    margin-top: 1rem;
+    color: $gray-500;
+    text-align: center;
+  }
+}

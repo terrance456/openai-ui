@@ -1,6 +1,34 @@
+@import "@/styles/variables";
+
 .navbar {
   position: static;
+  .nexus-logo {
+    display: none;
+    color: $white;
+    font-size: 2rem;
+  }
   .navbar-brand {
     font-weight: 700;
+  }
+  .menus {
+    display: flex;
+    align-items: center;
+    > :first-child {
+      margin-right: 3rem;
+      @include media-breakpoint-down(sm) {
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 310px) {
+  .navbar {
+    .navbar-brand {
+      display: none;
+    }
+    .nexus-logo {
+      display: flex;
+    }
   }
 }

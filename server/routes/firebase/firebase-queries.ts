@@ -16,7 +16,7 @@ export async function validateEmail(user: UserType) {
   }
 }
 
-export function getCredits(user: UserType) {
+export function getUserInformation(user: UserType) {
   return db.collection("users").where("userId", "==", user.userId).where("email", "==", user.email).get();
 }
 
