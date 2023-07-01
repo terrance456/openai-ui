@@ -31,8 +31,8 @@ export default function History() {
       .then((res: AxiosResponse<ImagesIdResponseType>) => {
         getHistoryImageFirebase(res.data.image_ids)
           .then((imageRes: Array<string>) => {
-            // setImagesUrl(imageRes.slice(0, DEFAULT_SLICE_LENGTH));
-            // setCopyImagesUrl(imageRes);
+            setImagesUrl(imageRes.slice(0, DEFAULT_SLICE_LENGTH));
+            setCopyImagesUrl(imageRes);
             setIsLoading(false);
           })
           .catch((e) => {
