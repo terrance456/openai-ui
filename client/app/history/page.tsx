@@ -15,13 +15,15 @@ import "./history.scss";
 import { useWindowScrollend } from "@/src/hooks/useWindowScrollend";
 import { downloadHistoryImage } from "@/src/utils/image-downloader";
 import EmptyContainer from "@/src/components/common/EmptyContainer/EmptyContainer";
+import GlassMorphismLoader from "@/src/components/common/GlassMorphismLoader/GlassMorphismLoader";
 
 const DEFAULT_SLICE_LENGTH: number = 21;
 
 export default function History() {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [isScrollLoading, setIsScrollLoading] = React.useState<boolean>(false);
   const [imagesUrl, setImagesUrl] = React.useState<Array<string>>([]);
-  const [copyImagesUrl, setCopyImagesUrl] = React.useState<Array<string>>([]);
+  const [imageIds, setImageIds] = React.useState<Array<string>>([]);
   const [sliceCount, setSliceCount] = React.useState<number>(DEFAULT_SLICE_LENGTH);
   const { updateToastList } = useToastNotificationContext();
 
@@ -29,10 +31,10 @@ export default function History() {
     const abortController: AbortController = new AbortController();
     getImagesIds(ApiRoutes.GetImagesIds, { signal: abortController.signal })
       .then((res: AxiosResponse<ImagesIdResponseType>) => {
-        getHistoryImageFirebase(res.data.image_ids)
+        setImageIds(res.data.image_ids);
+        getHistoryImageFirebase(res.data.image_ids.slice(0, DEFAULT_SLICE_LENGTH))
           .then((imageRes: Array<string>) => {
-            setImagesUrl(imageRes.slice(0, DEFAULT_SLICE_LENGTH));
-            setCopyImagesUrl(imageRes);
+            setImagesUrl(imageRes);
             setIsLoading(false);
           })
           .catch((e) => {
@@ -59,14 +61,22 @@ export default function History() {
     [updateToastList]
   );
 
-  const appendImages = () => {
-    if (copyImagesUrl.length === imagesUrl.length) {
+  const appendImages = React.useCallback(() => {
+    if (imageIds.length === imagesUrl.length) {
       return;
     }
+    setIsScrollLoading(true);
     const newSliceCount: number = sliceCount + DEFAULT_SLICE_LENGTH;
-    setImagesUrl((prev: Array<string>) => [...prev, ...copyImagesUrl.slice(sliceCount, newSliceCount)]);
-    setSliceCount(newSliceCount);
-  };
+    getHistoryImageFirebase(imageIds.slice(sliceCount, newSliceCount))
+      .then((imageRes: Array<string>) => {
+        setSliceCount(newSliceCount);
+        setImagesUrl((prevValue: Array<string>) => [...prevValue, ...imageRes]);
+        setIsScrollLoading(false);
+      })
+      .catch(() => {
+        onNotify("Error", "400", "We apologize, but we encountered a problem retrieving the historical images");
+      });
+  }, [imageIds, imagesUrl, sliceCount]);
 
   const renderBody = React.useCallback(() => {
     if (isLoading) {
@@ -83,17 +93,20 @@ export default function History() {
       return <EmptyContainer className="mt-5" text="Create accessible images for reviewing historical visuals" />;
     }
     return (
-      <section className="history-images">
-        {imagesUrl.map((url: string, index: number) => (
-          <DownloadOverlay key={index} onDownload={() => onImageDownload(url)}>
-            <Image src={url} alt="image" height={1024} width={1024} loading="lazy" />
-          </DownloadOverlay>
-        ))}
-      </section>
+      <>
+        <section className="history-images">
+          {imagesUrl.map((url: string, index: number) => (
+            <DownloadOverlay key={index} onDownload={() => onImageDownload(url)}>
+              <Image src={url} alt="image" height={1024} width={1024} loading="lazy" />
+            </DownloadOverlay>
+          ))}
+        </section>
+        {isScrollLoading && <GlassMorphismLoader />}
+      </>
     );
-  }, [isLoading, imagesUrl, onImageDownload]);
+  }, [isLoading, imagesUrl, isScrollLoading, onImageDownload]);
 
-  useWindowScrollend(appendImages);
+  useWindowScrollend(appendImages, isScrollLoading);
 
   return (
     <ProtectedRoute>
