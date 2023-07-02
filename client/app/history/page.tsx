@@ -72,11 +72,18 @@ export default function History() {
         setSliceCount(newSliceCount);
         setImagesUrl((prevValue: Array<string>) => [...prevValue, ...imageRes]);
         setIsScrollLoading(false);
+        window.requestAnimationFrame(onWindowScroll);
       })
       .catch(() => {
         onNotify("Error", "400", "We apologize, but we encountered a problem retrieving the historical images");
       });
   }, [imageIds, imagesUrl, sliceCount]);
+
+  const onWindowScroll = () => {
+    const currentPosition: number = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollAmount: number = 300;
+    window.scrollTo(0, currentPosition + scrollAmount);
+  };
 
   const renderBody = React.useCallback(() => {
     if (isLoading) {
