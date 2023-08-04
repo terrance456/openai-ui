@@ -3,7 +3,6 @@ import React from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/src/Auth/firebase";
 import { BsGoogle } from "react-icons/bs";
-import "./login.scss";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { v4 as uuidv4 } from "uuid";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
@@ -12,6 +11,7 @@ import { useAuthContext } from "@/src/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { HomeRoutes } from "@/src/constants/route";
 import Button from "@/src/components/common/Button/Button";
+import "./login.scss";
 
 export default function Login() {
   const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();

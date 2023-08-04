@@ -1,6 +1,7 @@
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import classNames from "classnames";
 import React from "react";
+import TimerProgressiveBar from "../common/TimerProgressiveBar/TimerProgressiveBar";
 import "./toast-notification.scss";
 
 export enum ToastIndicatorType {
@@ -35,6 +36,7 @@ export default function ToastNotification(props: ToastNotificationProps) {
             <button type="button" className="btn-close" onClick={() => removeToast(toastData.id)} />
           </div>
           <div className="toast-body">{toastData.body}</div>
+          <TimerProgressiveBar duration={7} />
         </div>
       ))}
     </div>

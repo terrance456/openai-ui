@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { ToastNotificationProvider } from "@/src/contexts/ToastNotificationContext";
 import { AuthContextProvider } from "@/src/contexts/AuthContext";
+import BottomNavigation from "@/src/components/common/BottomNavigation/BottomNavigation";
 import "../styles/global.scss";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Suspense fallback={<GlobalLoader />}>
               <Navbar />
               {children}
+              <BottomNavigation />
             </Suspense>
           </ToastNotificationProvider>
         </AuthContextProvider>

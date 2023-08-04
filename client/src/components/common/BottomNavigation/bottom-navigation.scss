@@ -1,0 +1,35 @@
+@import "@/styles/variables";
+
+.bottom-nav-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: $white;
+  background-color: $dark;
+  border-top: 1px solid $secondary;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  > .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1.5rem;
+    color: $gray-500;
+    text-decoration: none;
+    cursor: pointer;
+    > span {
+      font-size: 0.7rem;
+      font-weight: 300;
+    }
+    > svg {
+      font-size: 1.2rem;
+      margin-bottom: 0.1rem;
+    }
+    &.is-active {
+      color: $purple-300;
+    }
+  }
+}

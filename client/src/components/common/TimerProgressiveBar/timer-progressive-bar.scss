@@ -1,0 +1,21 @@
+@import "@/styles/variables";
+
+.timer-bar-container {
+  width: 100%;
+  .timer-bar {
+    height: 4px;
+    background-color: $gray-100;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    width: 0;
+  }
+}
+
+@keyframes roundtime {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}

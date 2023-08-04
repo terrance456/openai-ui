@@ -3,9 +3,7 @@ import React from "react";
 import { ApiRoutes } from "@/src/constants/route";
 import { postImageQuery } from "@/src/apis";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
-import { ProtectedRoute } from "@/src/components/ProtectedRoute";
 import { AxiosError, AxiosResponse } from "axios";
-import "./home.scss";
 import { ResponseImagesUrlType } from "@/src/types/image-query.type";
 import randomQuery from "../../public/query-list.json";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
@@ -15,6 +13,7 @@ import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
 import { useAuthContext } from "@/src/contexts/AuthContext";
 import ImagesSection from "@/src/components/ImagesSection/ImagesSection";
+import "./home.scss";
 
 export interface ImageLoaderType {
   [key: number]: boolean;
@@ -68,20 +67,18 @@ export default function Home() {
   };
 
   return (
-    <ProtectedRoute>
-      <div className="home-wrapper container-fluid container-lg">
-        <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
-        {imageUrls.length === 0 && (
-          <>
-            <div className="example-text">
-              <small>Few samples from OpenAi</small>
-            </div>
-            <ImagesSection onClickExample={fetchOpenAi} />
-          </>
-        )}
-        {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}
-        {isLoading && <GlobalLoader />}
-      </div>
-    </ProtectedRoute>
+    <div className="home-wrapper container-fluid container-lg">
+      <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
+      {imageUrls.length === 0 && (
+        <>
+          <div className="example-text">
+            <small>Few samples from OpenAi</small>
+          </div>
+          <ImagesSection onClickExample={fetchOpenAi} />
+        </>
+      )}
+      {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}
+      {isLoading && <GlobalLoader />}
+    </div>
   );
 }

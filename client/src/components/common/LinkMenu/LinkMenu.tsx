@@ -3,12 +3,9 @@ import React from "react";
 import Link from "next/link";
 import classNames from "classnames";
 import { usePathname } from "next/navigation";
-import "./link-menu.scss";
-import DropdownLink from "../DropdownLink/DropdownLink";
-import DropdownItem from "../DropdownLink/DropdownItem/DropdownItem";
-import { HomeRoutes } from "@/src/constants/route";
-import { useMediaQuery } from "react-responsive";
 import { useAuthContext } from "@/src/contexts/AuthContext";
+import { useMobileMediaQuery } from "@/src/hooks/useMobileMediaQuery";
+import "./link-menu.scss";
 
 interface RoutesType {
   label: string;
@@ -22,12 +19,12 @@ interface LinkMenuProps {
 
 export default function LinkMenu(props: LinkMenuProps) {
   const pathname: string = usePathname();
-  const isMobile: boolean = useMediaQuery({ maxWidth: 576 });
+  const isMobile: boolean = useMobileMediaQuery();
   const { user } = useAuthContext();
 
   return user ? (
     <div className="link-menu-wrapper">
-      {!isMobile ? (
+      {!isMobile && (
         <ul className="link-menus">
           {props.routes.map((value: RoutesType, index: number) => (
             <li key={index}>
@@ -37,15 +34,6 @@ export default function LinkMenu(props: LinkMenuProps) {
             </li>
           ))}
         </ul>
-      ) : (
-        <DropdownLink>
-          <DropdownItem link={HomeRoutes.Home} isSelected={pathname === HomeRoutes.Home}>
-            Home
-          </DropdownItem>
-          <DropdownItem link={HomeRoutes.History} isSelected={pathname === HomeRoutes.History}>
-            History
-          </DropdownItem>
-        </DropdownLink>
       )}
     </div>
   ) : null;

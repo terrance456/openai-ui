@@ -1,7 +1,7 @@
 @import "../../../styles/variables.scss";
 
 .toast-notification-wrapper {
-  position: absolute;
+  position: fixed;
   top: 1rem;
   right: 1rem;
   .toast {

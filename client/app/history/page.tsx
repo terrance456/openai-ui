@@ -97,7 +97,7 @@ export default function History() {
       );
     }
     if (imagesUrl.length < 1) {
-      return <EmptyContainer className="mt-5" text="Create accessible images for reviewing historical visuals" />;
+      return <EmptyContainer className="mt-5 history-empty-container" text="Generate images to view them!" />;
     }
     return (
       <>
