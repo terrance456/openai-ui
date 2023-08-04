@@ -6,7 +6,6 @@ import { AxiosError, AxiosResponse } from "axios";
 import { getHistoryImageFirebase } from "@/src/utils/history-images";
 import { ImagesIdResponseType } from "@/src/types/get-images-type";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
-import { ProtectedRoute } from "@/src/components/ProtectedRoute";
 import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import Image from "next/image";
@@ -116,14 +115,12 @@ export default function History() {
   useWindowScrollend(appendImages, isScrollLoading);
 
   return (
-    <ProtectedRoute>
-      <section className="history-container container-fluid container-lg">
-        <div className="history-title">
-          <h4>History</h4>
-          <hr />
-        </div>
-        {renderBody()}
-      </section>
-    </ProtectedRoute>
+    <section className="history-container container-fluid container-lg">
+      <div className="history-title">
+        <h4>History</h4>
+        <hr />
+      </div>
+      {renderBody()}
+    </section>
   );
 }
