@@ -2,7 +2,6 @@
 import React from "react";
 import { ApiRoutes } from "@/src/constants/route";
 import { postImageQuery } from "@/src/apis";
-import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
 import { AxiosError, AxiosResponse } from "axios";
 import { ResponseImagesUrlType } from "@/src/types/image-query.type";
 import randomQuery from "../../public/query-list.json";
@@ -13,6 +12,7 @@ import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
 import { useAuthContext } from "@/src/contexts/AuthContext";
 import ImagesSection from "@/src/components/ImagesSection/ImagesSection";
+import AiLoading from "@/src/components/common/AiLoading/AiLoading";
 import "./home.scss";
 
 export interface ImageLoaderType {
@@ -23,6 +23,7 @@ export default function Home() {
   const [imageUrls, setImageUrls] = React.useState<Array<ResponseImagesUrlType>>([]);
   const [text, setText] = React.useState<string>("");
   const [isLoading, setisLoading] = React.useState<boolean>(false);
+  const [progress, setProgress] = React.useState<number>(0);
   const [imageLoaders, setImageLoaders] = React.useState<ImageLoaderType>({});
   const { updateToastList } = useToastNotificationContext();
   const { userCredits, reduceCredits } = useAuthContext();
@@ -36,6 +37,7 @@ export default function Home() {
         updateToastList({ id: uuidv4(), header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
         return;
       }
+      const progressId: NodeJS.Timer = progressMockLoader();
       setisLoading(true);
       setImageUrls([]);
       postImageQuery(ApiRoutes.Query, { query: payload })
@@ -55,11 +57,29 @@ export default function Home() {
           });
         })
         .finally(() => {
-          setisLoading(false);
+          clearInterval(progressId);
+          setProgress(100);
+          setTimeout(() => {
+            setProgress(0);
+            setisLoading(false);
+          }, 1000);
         });
     },
     [userCredits.credits, reduceCredits, updateToastList]
   );
+
+  const progressMockLoader = () => {
+    return setInterval(
+      () =>
+        setProgress((lastProgress: number) => {
+          if (lastProgress > 100) {
+            return 0;
+          }
+          return lastProgress + Number((Math.random() * 1).toFixed(2));
+        }),
+      100
+    );
+  };
 
   const generateRandomQuery = () => {
     const queryList: Array<string> = randomQuery.data;
@@ -78,7 +98,7 @@ export default function Home() {
         </>
       )}
       {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}
-      {isLoading && <GlobalLoader />}
+      {isLoading && <AiLoading progress={progress} />}
     </div>
   );
 }
