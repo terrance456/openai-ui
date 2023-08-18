@@ -86,19 +86,29 @@ export default function Home() {
     setText(queryList[Math.floor(Math.random() * 40)]);
   };
 
+  const renderBody = () => {
+    if (isLoading) {
+      return <AiLoading className="svg-ai-loader" progress={progress} />;
+    }
+
+    if (imageUrls.length > 0) {
+      return <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />;
+    }
+
+    return (
+      <>
+        <div className="example-text">
+          <small>Few samples from OpenAi</small>
+        </div>
+        <ImagesSection onClickExample={fetchOpenAi} />
+      </>
+    );
+  };
+
   return (
     <div className="home-wrapper container-fluid container-lg">
       <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
-      {imageUrls.length === 0 && (
-        <>
-          <div className="example-text">
-            <small>Few samples from OpenAi</small>
-          </div>
-          <ImagesSection onClickExample={fetchOpenAi} />
-        </>
-      )}
-      {imageUrls.length > 0 && <QueryListImages list={imageUrls} imageLoaders={imageLoaders} setImageLoaders={setImageLoaders} />}
-      {isLoading && <AiLoading progress={progress} />}
+      {renderBody()}
     </div>
   );
 }

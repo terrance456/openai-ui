@@ -1,7 +1,8 @@
 import React from "react";
-import EmptySvg from "@/src/assets/svg/empty.svg";
-import "./empty-container.scss";
 import classNames from "classnames";
+import Lottie from "lottie-react";
+import EmptyBox from "@/src/assets/lottie/empty-box.json";
+import "./empty-container.scss";
 
 interface EmptyContainerProps {
   text?: string;
@@ -11,7 +12,7 @@ interface EmptyContainerProps {
 export default function EmptyContainer(props: EmptyContainerProps) {
   return (
     <section className={classNames("empty-container", props.className)}>
-      <EmptySvg />
+      <Lottie animationData={EmptyBox} loop={true} />
       {props.text && <p>{props.text}</p>}
     </section>
   );

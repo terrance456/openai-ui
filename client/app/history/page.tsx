@@ -10,11 +10,13 @@ import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import Image from "next/image";
 import DownloadOverlay from "@/src/components/common/DownloadOverlay/DownloadOverlay";
-import "./history.scss";
 import { useWindowScrollend } from "@/src/hooks/useWindowScrollend";
 import { downloadHistoryImage } from "@/src/utils/image-downloader";
 import EmptyContainer from "@/src/components/common/EmptyContainer/EmptyContainer";
 import GlassMorphismLoader from "@/src/components/common/GlassMorphismLoader/GlassMorphismLoader";
+import Lottie from "lottie-react";
+import LoadingSvg from "@/src/assets/lottie/loading-envelop.json";
+import "./history.scss";
 
 const DEFAULT_SLICE_LENGTH: number = 21;
 
@@ -87,11 +89,8 @@ export default function History() {
   const renderBody = React.useCallback(() => {
     if (isLoading) {
       return (
-        <div className="placeholder-glow">
-          <span className="placeholder col-sm-8 col-12 mb-3 h-50" />
-          <span className="placeholder col-12 mb-3 h-50" />
-          <span className="placeholder col-sm-5 col-12 mb-3 h-50" />
-          <span className="placeholder col-sm-9 col-12 mb-3 h-50" />
+        <div className="history-loader">
+          <Lottie animationData={LoadingSvg} loop={true} className="svg-animation" />
         </div>
       );
     }
