@@ -6,6 +6,10 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  position: relative;
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 3.6rem;
+  }
   .example-text {
     display: flex;
     justify-content: center;
@@ -13,6 +17,16 @@
     margin-bottom: 3rem;
     small {
       color: $gray-400;
+    }
+  }
+  .svg-ai-loader {
+    margin-bottom: 1.5rem;
+    @include media-breakpoint-down(sm) {
+      margin-bottom: 0rem;
+      position: absolute;
+      width: 100%;
+      top: 10%;
+      left: 0;
     }
   }
 }

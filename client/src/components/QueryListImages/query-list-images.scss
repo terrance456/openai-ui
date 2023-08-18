@@ -42,13 +42,17 @@
       }
       .image-loader {
         position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        small {
-          margin-bottom: 1rem;
-          text-align: center;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        .placeholder-glow {
+          height: 100%;
+          width: 100%;
+          margin-bottom: 0;
+          .placeholder {
+            height: 100%;
+          }
         }
       }
     }

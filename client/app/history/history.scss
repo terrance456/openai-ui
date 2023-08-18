@@ -25,6 +25,13 @@
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
+    > .svg-animation {
+      margin-bottom: 2rem;
+      > svg {
+        height: auto;
+        max-height: 20rem;
+      }
+    }
   }
   .history-empty-container {
     @include media-breakpoint-down(sm) {

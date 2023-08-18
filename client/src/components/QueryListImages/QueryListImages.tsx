@@ -15,6 +15,7 @@ interface QueryListImagesProps {
 
 export default React.memo(function QueryListImages({ list, imageLoaders, setImageLoaders }: QueryListImagesProps) {
   const { updateToastList } = useToastNotificationContext();
+
   const onLoad = (index: number) => {
     setImageLoaders((prevLoaders: ImageLoaderType) => ({ ...prevLoaders, [index]: false }));
   };
@@ -36,10 +37,9 @@ export default React.memo(function QueryListImages({ list, imageLoaders, setImag
               <Image src={value.url} alt="image" height={1024} width={1024} priority loading="eager" onLoadingComplete={() => onLoad(index)} />
               {imageLoaders[index] && (
                 <div className="image-loader">
-                  <small>Your image is getting loaded, hang in there</small>
-                  <div className="spinner-border text-light" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
+                  <p className="placeholder-glow">
+                    <span className="placeholder col-12"></span>
+                  </p>
                 </div>
               )}
             </div>
