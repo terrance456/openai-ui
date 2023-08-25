@@ -27,7 +27,7 @@ router.post("/checkout-payment-session", async (req: Request, res: Response) => 
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card", "fpx"],
-      line_items: [{ quantity: 1, price: validProduct.default_price as string }],
+      line_items: [{ quantity: 1, price: validProduct.default_price as string, price_data: { currency: "myr" } }],
       payment_intent_data: { metadata: { email: res.locals.user.email, userId: res.locals.user.uid, productPrice: validProduct.default_price as string } },
       customer_email: res.locals.user.email,
       success_url: `${process.env.HOST_URL}/payment/success`,
