@@ -1,3 +1,4 @@
+import Stripe from "stripe";
 import { admin } from "../../auth/firebase-config";
 import { CreditsType, ImageListType, UserType } from "./type";
 import { getStorage } from "firebase-admin/storage";
@@ -38,4 +39,11 @@ export async function updateImageListIDs(ref: any, record: Array<string>) {
 export function uploadImage(image: ImageListType) {
   const bf = Buffer.from(image.arrayBuffer as ArrayBuffer);
   return getStorage().bucket().file(image.id).save(bf, { contentType: "image/png" });
+}
+
+export async function updatePaymentList(ref: any, payment: Stripe.Charge, amount: number) {
+  return db
+    .collection("users")
+    .doc(ref.id)
+    .update({ payment_list: admin.firestore.FieldValue.arrayUnion(payment), credits: admin.firestore.FieldValue.increment(amount) });
 }
