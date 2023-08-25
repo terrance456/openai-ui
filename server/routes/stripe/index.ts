@@ -34,7 +34,7 @@ router.post("/checkout-payment-session", async (req: Request, res: Response) => 
     });
     return res.status(200).json({ url: checkoutSession.url });
   } catch (e) {
-    return res.status(503).send({ message: "Service unavailable, please try again later" });
+    return res.status(503).send(e);
   }
 });
 
