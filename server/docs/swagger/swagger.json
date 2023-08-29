@@ -1,0 +1,142 @@
+{
+  "openapi": "3.0.2",
+  "info": { "title": "Nexusphere Apis", "version": "0.1.0" },
+  "externalDocs": {
+    "description": "swagger.json",
+    "url": "/download/swagger.json"
+  },
+  "paths": {
+    "/openai/query": {
+      "post": {
+        "tags": ["OpenAi"],
+        "summary": "Image generation",
+        "description": "OpenAi (Dalle 2) image generation",
+        "operationId": "openai_image_generate",
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OpenAiImageGenerateRequest" } } }, "required": true },
+        "responses": {
+          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OpenAiImageResponse" } } } },
+          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
+        }
+      }
+    },
+    "/firebase/get-credits": {
+      "get": {
+        "tags": ["Firebase"],
+        "summary": "Get credits",
+        "description": "Returns users balance credits",
+        "operationId": "get_user_credits",
+        "responses": {
+          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserCreditsDetailsResponse" } } } },
+          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
+        }
+      }
+    },
+    "/firebase/get-images-id": {
+      "get": {
+        "tags": ["Firebase"],
+        "summary": "Get history images",
+        "description": "Returns users generated images",
+        "operationId": "get_user_generated_images",
+        "responses": {
+          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserGeneratedImagesResponse" } } } },
+          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
+        }
+      }
+    },
+    "/stripe/checkout-payment-session": {
+      "post": {
+        "tags": ["Stripe"],
+        "summary": "Checkout session",
+        "description": "Returns payment url to client",
+        "operationId": "checkout_payment_session",
+        "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CheckoutPaymentSessionRequest" } } }, "required": true },
+        "responses": {
+          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CheckoutPaymentSessionResponse" } } } },
+          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
+        }
+      }
+    },
+    "/stripe/signature/confirmation": {
+      "post": {
+        "tags": ["Stripe"],
+        "summary": "Checkout session",
+        "description": "Stripe Webhook"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OpenAiImageGenerateRequest": {
+        "title": "OpenAiImageGenerateRequest",
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "query": { "title": "Query", "type": "string", "example": "Cat, digital art" }
+        }
+      },
+      "OpenAiImageResponse": {
+        "title": "OpenAiImageResponse",
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/ImageResponse" }
+      },
+      "ImageResponse": {
+        "title": "ImageResponse",
+        "type": "object",
+        "properties": {
+          "url": { "title": "Url", "type": "string", "example": ".com" },
+          "id": { "title": "Id", "type": "string", "example": "5000" }
+        }
+      },
+      "UserCreditsDetailsResponse": {
+        "title": "UserCreditsDetailsResponse",
+        "type": "object",
+        "properties": {
+          "userData": {
+            "title": "UserDetails",
+            "type": "object",
+            "properties": {
+              "userId": { "title": "UserId", "type": "string", "example": "10001" },
+              "email": { "title": "Email", "type": "string", "example": "test@mail.com" },
+              "credits": { "title": "Credits", "type": "number", "example": 5000 }
+            }
+          }
+        }
+      },
+      "UserGeneratedImagesResponse": {
+        "title": "UserGeneratedImagesResponse",
+        "type": "object",
+        "properties": {
+          "images_ids": { "type": "array", "items": { "type": "string", "example": "10005" } }
+        }
+      },
+      "CheckoutPaymentSessionRequest": {
+        "title": "CheckoutPaymentSessionRequest",
+        "required": ["product_id"],
+        "type": "object",
+        "properties": {
+          "product_id": { "title": "Product id", "type": "string", "example": "9002" }
+        }
+      },
+      "CheckoutPaymentSessionResponse": {
+        "title": "CheckoutPaymentSessionResponse",
+        "type": "object",
+        "properties": {
+          "url": { "type": "string", "example": ".com" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+
+  "security": [
+    {
+      "Authorization": []
+    }
+  ]
+}
