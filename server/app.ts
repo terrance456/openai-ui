@@ -7,6 +7,7 @@ import FirebaseRoutes from "./routes/firebase";
 import OpenAiRoutes from "./routes/openai";
 import StripeWebhookRoutes from "./routes/stripe/webhook";
 import StripeRoutes from "./routes/stripe";
+import setupSwaggerDocs from "./docs/swagger/setupSwagger";
 
 dotenv.config();
 
@@ -21,6 +22,9 @@ app.use("/signature", StripeWebhookRoutes);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// swagger docs
+setupSwaggerDocs(app);
 
 app.use(middleware.decodeToken);
 
