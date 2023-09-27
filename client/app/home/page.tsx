@@ -106,7 +106,7 @@ export default function Home() {
   };
 
   return (
-    <div className="home-wrapper container-fluid container-lg">
+    <div className="home-wrapper">
       <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
       {renderBody()}
     </div>

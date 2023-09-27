@@ -1,6 +1,7 @@
 export enum HomeRoutes {
   Home = "/home",
   History = "/history",
+  Pricing = "/pricing",
 }
 
 export enum ApiRoutes {

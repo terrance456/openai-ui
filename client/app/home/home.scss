@@ -1,15 +1,10 @@
 @import "../../styles/variables.scss";
 
 .home-wrapper {
-  color: white;
-  padding-top: 5rem;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   position: relative;
-  @include media-breakpoint-down(sm) {
-    padding-bottom: 3.6rem;
-  }
   .example-text {
     display: flex;
     justify-content: center;

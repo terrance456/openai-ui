@@ -114,7 +114,7 @@ export default function History() {
   useWindowScrollend(appendImages, isScrollLoading);
 
   return (
-    <section className="history-container container-fluid container-lg">
+    <section className="history-container">
       <div className="history-title">
         <h4>History</h4>
         <hr />

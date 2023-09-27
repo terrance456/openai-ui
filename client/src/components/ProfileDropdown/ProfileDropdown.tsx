@@ -6,7 +6,8 @@ import "./profile-dropdown.scss";
 import { MdToken } from "react-icons/md";
 import classNames from "classnames";
 import { auth } from "@/src/Auth/firebase";
-import Button from "../common/Button/Button";
+import LinkButton from "../common/LinkButton/LinkButton";
+import { HomeRoutes } from "@/src/constants/route";
 
 export default function ProfileDropdown() {
   const { user, userCredits, isLoadingCredits } = useAuthContext();
@@ -59,9 +60,16 @@ export default function ProfileDropdown() {
                   <span>{userCredits?.credits || 0}</span>
                 </div>
               )}
-              <Button theme="light" size="sm">
+              <LinkButton
+                href={HomeRoutes.Pricing}
+                onClick={() => {
+                  setShow(false);
+                }}
+                theme="light"
+                size="sm"
+              >
                 Buy credits
-              </Button>
+              </LinkButton>
             </div>
             <div className="dropdown-button" role="button">
               Help
