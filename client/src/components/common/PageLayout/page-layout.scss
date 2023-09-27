@@ -1,0 +1,9 @@
+@import "@/styles/variables";
+
+.page-layout-wrapper {
+  padding-top: 3.5rem;
+  color: white;
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 4.5rem;
+  }
+}

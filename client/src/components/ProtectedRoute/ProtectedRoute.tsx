@@ -16,7 +16,7 @@ function ProtectedRoute(props: ProtectedRouteProps) {
       return;
     }
     if (!user) {
-      redirect("/");
+      return redirect("/");
     }
   }, [user, loading]);
 
