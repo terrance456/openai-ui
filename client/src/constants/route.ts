@@ -2,6 +2,8 @@ export enum HomeRoutes {
   Home = "/home",
   History = "/history",
   Pricing = "/pricing",
+  PaymentSuccess = "/payment/success",
+  PaymentCancelled = "/payment/cancelled",
 }
 
 export enum ApiRoutes {

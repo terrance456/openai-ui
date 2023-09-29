@@ -1,0 +1,56 @@
+@import "@/styles/variables";
+
+.payment-info-message-container {
+  background-color: rgba(51, 50, 50, 0.737);
+  border-radius: 0.5rem;
+  padding: 1.5rem 2rem;
+  border: 1px solid $gray-700;
+  width: 80%;
+  max-width: 512px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  .icon {
+    svg {
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .success-icon {
+      color: #00e676;
+    }
+    .warning-icon {
+      color: #ef5350;
+    }
+  }
+  .content {
+    color: $gray-300;
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+  }
+  .btns-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    &.is-multiple a {
+      justify-content: space-between;
+      width: 100%;
+      &:not(:last-of-type) {
+        margin-right: 1rem;
+      }
+    }
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      &.is-multiple a {
+        &:not(:last-of-type) {
+          margin-bottom: 1rem;
+          margin-right: 0rem;
+        }
+      }
+    }
+  }
+}

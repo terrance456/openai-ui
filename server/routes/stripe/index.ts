@@ -31,6 +31,7 @@ router.post("/checkout-payment-session", async (req: Request, res: Response) => 
       payment_intent_data: { metadata: { email: res.locals.user.email, userId: res.locals.user.uid, productPrice: validProduct.default_price as string } },
       customer_email: res.locals.user.email,
       success_url: `${process.env.HOST_URL}/payment/success`,
+      cancel_url: `${process.env.HOST_URL}/payment/cancelled`,
     });
     return res.status(200).json({ url: checkoutSession.url });
   } catch (e: any) {

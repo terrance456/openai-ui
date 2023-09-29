@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import Link, { LinkProps } from "next/link";
 
-type LinkButtonProps = LinkProps & {
+export type LinkButtonProps = LinkProps & {
   loading?: boolean;
   theme: "primary" | "secondary" | "success" | "danger" | "info" | "light" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-danger" | "outline-info" | "outline-light";
   size?: "sm" | "lg";

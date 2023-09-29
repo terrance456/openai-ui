@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 
-type ButtonProps = JSX.IntrinsicElements["button"] & {
+export type ButtonProps = JSX.IntrinsicElements["button"] & {
   loading?: boolean;
   theme: "primary" | "secondary" | "success" | "danger" | "info" | "light" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-danger" | "outline-info" | "outline-light";
   size?: "sm" | "lg";

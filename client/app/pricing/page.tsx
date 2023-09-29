@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import PageLayout from "@/src/components/common/PageLayout/PageLayout";
 import "./pricing.scss";
@@ -12,6 +13,7 @@ const pricingItems: Array<PricingItemType> = [
     subTitle: "Best for Stunning AI-Generated Images, personal use",
     featureList: ["32 Images", "200 credits", "Free Download", " High Resolution images", "AI-Generated"],
     price: 7,
+    isDeal: "Best value",
   },
   {
     id: "502",
@@ -23,16 +25,16 @@ const pricingItems: Array<PricingItemType> = [
 ];
 
 export default function PricingPage() {
-  const onClick = (id: string) => {
-    // fetch
+  const onClick = async (id: string) => {
+    //fetch
   };
 
   return (
     <PageLayout>
-      <section className="container-fluid container-lg pricing-page-wrapper">
+      <section className="pricing-page-wrapper">
         <div className="pricing-headers">
           <h3>Revolutionize Creativity with Nexusphere AI Images</h3>
-          <p>Elevate your creativity with Nexusphere AI-generated images. Explore pricing options below and transform your visual content effortlessly.</p>
+          <p>Elevate your creativity with Nexusphere AI generated images. Explore pricing options below and transform your visual content effortlessly.</p>
         </div>
         <div className="pricing-cards-wrapper">
           {pricingItems.map((item: PricingItemType) => (

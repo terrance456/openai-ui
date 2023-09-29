@@ -10,6 +10,22 @@
   background-color: rgb(43, 48, 53);
   border-radius: 0.5rem;
   width: 300px;
+  position: relative;
+
+  &.is-deal {
+    border: 1px solid $primary;
+  }
+
+  .is-deal-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $primary;
+    padding: 0 0.5rem;
+    border-radius: 2rem;
+    font-size: 0.785rem;
+  }
 
   > .title {
     margin-bottom: 0.5rem;
