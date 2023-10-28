@@ -1,0 +1,90 @@
+@import "@/styles/variables";
+
+.pricing-card-container {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border: 1px solid $gray-700;
+  background-color: rgb(43, 48, 53);
+  border-radius: 0.5rem;
+  width: 300px;
+  position: relative;
+
+  &.is-deal {
+    border: 1px solid $primary;
+  }
+
+  .is-deal-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $primary;
+    padding: 0 0.5rem;
+    border-radius: 2rem;
+    font-size: 0.785rem;
+  }
+
+  > .title {
+    margin-bottom: 0.5rem;
+    h2 {
+      text-align: center;
+      font-size: 1.2rem;
+    }
+  }
+  > .subtitle {
+    margin-bottom: 1.2rem;
+    p {
+      text-align: center;
+      font-size: 14px;
+      color: $gray-500;
+      margin-bottom: 0;
+    }
+  }
+  > .currency {
+    margin-bottom: 1.2rem;
+    span {
+      display: block;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+  }
+
+  > .feature-list {
+    margin-bottom: 0.5rem;
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 13px;
+        &:not(:last-of-type) {
+          margin-bottom: 0.6rem;
+        }
+        svg {
+          fill: rgb(50, 197, 50);
+          height: 1rem;
+          width: 1rem;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  &:not(:last-of-type) {
+    margin-right: 5rem;
+    @include media-breakpoint-down(md) {
+      margin-right: 0;
+      margin-bottom: 2rem;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+  }
+}

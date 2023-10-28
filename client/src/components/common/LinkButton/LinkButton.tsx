@@ -1,18 +1,19 @@
-import classNames from "classnames";
 import React from "react";
+import classNames from "classnames";
+import Link, { LinkProps } from "next/link";
 
-export type ButtonProps = JSX.IntrinsicElements["button"] & {
+export type LinkButtonProps = LinkProps & {
   loading?: boolean;
   theme: "primary" | "secondary" | "success" | "danger" | "info" | "light" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-danger" | "outline-info" | "outline-light";
   size?: "sm" | "lg";
   className?: string;
 };
 
-export default function Button({ loading, theme, size, children, className, ...props }: React.PropsWithChildren<ButtonProps>) {
+export default function LinkButton({ loading, theme, size, children, className, ...props }: React.PropsWithChildren<LinkButtonProps>) {
   const newClassName: string = classNames("btn", `btn-${theme}`, size && `btn-${size}`, className);
 
   return (
-    <button className={newClassName} {...props}>
+    <Link className={newClassName} {...props}>
       {loading ? (
         <>
           <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -21,6 +22,6 @@ export default function Button({ loading, theme, size, children, className, ...p
       ) : (
         children
       )}
-    </button>
+    </Link>
   );
 }

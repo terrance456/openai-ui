@@ -43,6 +43,18 @@
         }
       }
     },
+    "/firebase/get-payment-history": {
+      "get": {
+        "tags": ["Firebase"],
+        "summary": "Get Payment history",
+        "description": "Returns list of generated payments",
+        "operationId": "get_payment_history",
+        "responses": {
+          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PaymentHistoryResponse" } } } },
+          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
+        }
+      }
+    },
     "/stripe/checkout-payment-session": {
       "post": {
         "tags": ["Stripe"],
@@ -122,6 +134,24 @@
         "type": "object",
         "properties": {
           "url": { "type": "string", "example": ".com" }
+        }
+      },
+      "PaymentHistoryResponse": {
+        "title": "PaymentHistoryResponse",
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/PaymentHistoryDetails" }
+      },
+      "PaymentHistoryDetails": {
+        "title": "PaymentHistoryDetails",
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "string", "example": "5000" },
+          "invoice": { "title": "Invoice", "type": "string", "example": "id_5464561235" },
+          "purchased_date": { "title": "Date", "type": "number", "example": 168545661235 },
+          "amount": { "title": "Amount", "type": "number", "example": 5000 },
+          "currency": { "title": "Currency", "type": "string", "example": "myr" },
+          "status": { "title": "Status", "type": "string", "example": "succeded" },
+          "productId": { "title": "Product id", "type": "number", "example": 1500 }
         }
       }
     },
