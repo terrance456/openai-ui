@@ -25,6 +25,6 @@ export function formatPaymentHistory(list: Stripe.PaymentIntent[], productList: 
     amount: value.amount,
     currency: value.currency,
     status: value.status,
-    productId: productList.find((product: Stripe.Product) => product.default_price === value.metadata.productPrice)?.metadata.clientId || null,
+    productId: productList.find((product: Stripe.Product) => product.default_price === value.metadata.productPrice)?.metadata?.clientId || null,
   }));
 }
