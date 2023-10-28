@@ -10,6 +10,7 @@ import { useToastNotificationContext } from "@/src/contexts/ToastNotificationCon
 import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import { AxiosResponse } from "axios";
+import { onAchorTagClick } from "@/src/utils/anchor-tag-click";
 
 type PricingItemType = Omit<PricingCardProps, "onClick">;
 
@@ -37,7 +38,7 @@ export default function PricingPage() {
   const onClick = async (product_id: string) => {
     try {
       const res: AxiosResponse<ResponseCheckoutPaymentSession> = await postCheckoutPaymentSession(ApiRoutes.PostCheckoutPaymentSession, { product_id });
-      window.open(res.data.url, "_blank");
+      onAchorTagClick(res.data.url);
       return;
     } catch {
       updateToastList({ id: uuidv4(), header: "Payment session failed", body: "Checkout payment failed, please try again later", type: ToastIndicatorType.WARNING });
