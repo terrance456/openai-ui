@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import { retriveProductCredits } from "../stripe/utils";
 
 interface UserResponseType {
   userId: string;
@@ -26,6 +25,6 @@ export function formatPaymentHistory(list: Stripe.PaymentIntent[], productList: 
     amount: value.amount,
     currency: value.currency,
     status: value.status,
-    productId: retriveProductCredits(productList, value.metadata.productPrice),
+    productId: productList.find((value: Stripe.Product) => value.default_price === value.metadata.productPrice) || null,
   }));
 }
