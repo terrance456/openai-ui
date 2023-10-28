@@ -44,7 +44,7 @@
 
 .preloaded-image-modal {
   .modal-body {
-    height: 400px;
+    min-height: 400px;
     width: 350px;
     .custom-card {
       overflow: hidden;

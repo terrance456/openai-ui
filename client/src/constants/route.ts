@@ -11,4 +11,5 @@ export enum ApiRoutes {
   SetCookie = "/setcookie",
   GetCredits = "/firebase/get-credits",
   GetImagesIds = "/firebase/get-images-id",
+  PostCheckoutPaymentSession = "/stripe/checkout-payment-session",
 }

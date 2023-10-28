@@ -3,6 +3,13 @@ import React from "react";
 import PageLayout from "@/src/components/common/PageLayout/PageLayout";
 import "./pricing.scss";
 import PricingCard, { PricingCardProps } from "@/src/components/PricingCard/PricingCard";
+import { postCheckoutPaymentSession } from "@/src/apis";
+import { ApiRoutes } from "@/src/constants/route";
+import { ResponseCheckoutPaymentSession } from "@/src/types/post-checkout.type";
+import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
+import { v4 as uuidv4 } from "uuid";
+import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
+import { AxiosResponse } from "axios";
 
 type PricingItemType = Omit<PricingCardProps, "onClick">;
 
@@ -25,8 +32,16 @@ const pricingItems: Array<PricingItemType> = [
 ];
 
 export default function PricingPage() {
-  const onClick = async (id: string) => {
-    //fetch
+  const { updateToastList } = useToastNotificationContext();
+
+  const onClick = async (product_id: string) => {
+    try {
+      const res: AxiosResponse<ResponseCheckoutPaymentSession> = await postCheckoutPaymentSession(ApiRoutes.PostCheckoutPaymentSession, { product_id });
+      window.open(res.data.url);
+      return;
+    } catch {
+      updateToastList({ id: uuidv4(), header: "Payment session failed", body: "Checkout payment failed, please try again later", type: ToastIndicatorType.DANGER });
+    }
   };
 
   return (
