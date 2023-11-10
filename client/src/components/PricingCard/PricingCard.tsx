@@ -11,21 +11,16 @@ export interface PricingCardProps {
   subTitle: string;
   price: number;
   featureList: Array<string>;
-  onClick: (id: string) => Promise<void>;
+  onClick: (id: string) => void;
   isDeal?: string;
+  isLoading?: boolean;
 }
 
 export default function PricingCard(props: PricingCardProps) {
   const formatCurrency = new Intl.NumberFormat("en-MY", { currency: "MYR", style: "currency" });
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const onClickCard = async () => {
-    setIsLoading(true);
-    try {
-      await props.onClick(props.id);
-    } finally {
-      setIsLoading(false);
-    }
+  const onClickCard = () => {
+    props.onClick(props.id);
   };
 
   return (
@@ -49,8 +44,8 @@ export default function PricingCard(props: PricingCardProps) {
           ))}
         </ul>
       </div>
-      <Button theme="light" size="sm" onClick={onClickCard} disabled={isLoading}>
-        {isLoading ? "Processing..." : "Get started"}
+      <Button theme="light" size="sm" onClick={onClickCard} disabled={props.isLoading}>
+        {props.isLoading ? "Processing..." : "Get started"}
       </Button>
     </div>
   );

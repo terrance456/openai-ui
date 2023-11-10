@@ -33,16 +33,21 @@ const pricingItems: Array<PricingItemType> = [
 ];
 
 export default function PricingPage() {
+  const [pricingLoaders, setPricingLoaders] = React.useState<Record<string, boolean>>({});
   const { updateToastList } = useToastNotificationContext();
 
-  const onClick = async (product_id: string) => {
-    try {
-      const res: AxiosResponse<ResponseCheckoutPaymentSession> = await postCheckoutPaymentSession(ApiRoutes.PostCheckoutPaymentSession, { product_id });
-      onAchorTagClick(res.data.url);
-      return;
-    } catch {
-      updateToastList({ id: uuidv4(), header: "Payment session failed", body: "Checkout payment failed, please try again later", type: ToastIndicatorType.WARNING });
-    }
+  const onClick = (product_id: string) => {
+    setPricingLoaders((prevLoaders: Record<string, boolean>) => ({ ...prevLoaders, [product_id]: true }));
+    postCheckoutPaymentSession(ApiRoutes.PostCheckoutPaymentSession, { product_id })
+      .then((res: AxiosResponse<ResponseCheckoutPaymentSession>) => {
+        onAchorTagClick(res.data.url);
+      })
+      .catch(() => {
+        updateToastList({ id: uuidv4(), header: "Payment session failed", body: "Checkout payment failed, please try again later", type: ToastIndicatorType.WARNING });
+      })
+      .finally(() => {
+        setPricingLoaders((prevLoaders: Record<string, boolean>) => ({ ...prevLoaders, [product_id]: false }));
+      });
   };
 
   return (
@@ -54,7 +59,7 @@ export default function PricingPage() {
         </div>
         <div className="pricing-cards-wrapper">
           {pricingItems.map((item: PricingItemType) => (
-            <PricingCard key={item.id} {...item} onClick={onClick} />
+            <PricingCard key={item.id} {...item} onClick={onClick} isLoading={!!pricingLoaders[item.id]} />
           ))}
         </div>
       </section>
