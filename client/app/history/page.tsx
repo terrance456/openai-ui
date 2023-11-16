@@ -6,7 +6,6 @@ import { AxiosError, AxiosResponse } from "axios";
 import { getHistoryImageFirebase } from "@/src/utils/history-images";
 import { ImagesIdResponseType } from "@/src/types/get-images-type";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
-import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import Image from "next/image";
 import DownloadOverlay from "@/src/components/common/DownloadOverlay/DownloadOverlay";
@@ -43,16 +42,18 @@ export default function History() {
             onNotify("Error", "400", "We apologize, but we encountered a problem retrieving the historical images");
           });
       })
-      .catch(({ response }: AxiosError<any>) => {
+      .catch(({ response, message }: AxiosError<any>) => {
         setIsLoading(false);
-        onNotify(response?.statusText || "Error", response?.status?.toString() as string, response?.data?.message || response?.data?.error?.message || "Failed to fetch history images");
+        if (message !== "canceled") {
+          onNotify(response?.statusText || "Error", response?.status?.toString() as string, response?.data?.message || response?.data?.error?.message || "Failed to fetch history images");
+        }
       });
 
     return () => abortController.abort();
   }, []);
 
   const onNotify = (header: string, subHeader: string, body: string) => {
-    updateToastList({ id: uuidv4(), header, subHeader, body, type: ToastIndicatorType.DANGER, className: "text-light" });
+    updateToastList({ header, subHeader, body, type: ToastIndicatorType.DANGER, className: "text-light" });
   };
 
   const onImageDownload = React.useCallback(

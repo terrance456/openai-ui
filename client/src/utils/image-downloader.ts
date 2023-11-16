@@ -1,30 +1,29 @@
 import axios, { AxiosResponse } from "axios";
 import { FirebaseStorage, getDownloadURL, getStorage, ref } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType, ToastInfoType } from "../components/ToastNotification/ToastNotification";
 
 type ErrorReturnType = {
   errorText: string;
 };
 
-export async function fetchImage(imageId: string, toastCallback: (toastInfo: ToastInfoType) => void) {
+export async function fetchImage(imageId: string, toastCallback: (toastInfo: Omit<ToastInfoType, "id">) => void) {
   try {
     const imageUrl: string = (await getImageUrlFromFirebase(imageId)) as string;
     const imageBlob: Blob = await fetchImageBlob(imageUrl);
     downloadImage(URL.createObjectURL(imageBlob));
   } catch (error) {
     const newError: ErrorReturnType = error as ErrorReturnType;
-    toastCallback({ id: uuidv4(), header: "Download failed", body: newError.errorText, type: ToastIndicatorType.WARNING });
+    toastCallback({ header: "Download failed", body: newError.errorText, type: ToastIndicatorType.WARNING });
   }
 }
 
-export const downloadHistoryImage = async (url: string, toastCallback: (toastInfo: ToastInfoType) => void) => {
+export const downloadHistoryImage = async (url: string, toastCallback: (toastInfo: Omit<ToastInfoType, "id">) => void) => {
   try {
     const imageBlob: Blob = await fetchImageBlob(url);
     downloadImage(URL.createObjectURL(imageBlob));
   } catch (error) {
     const newError: ErrorReturnType = error as ErrorReturnType;
-    toastCallback({ id: uuidv4(), header: "Download failed", body: newError.errorText, type: ToastIndicatorType.WARNING });
+    toastCallback({ header: "Download failed", body: newError.errorText, type: ToastIndicatorType.WARNING });
   }
 };
 

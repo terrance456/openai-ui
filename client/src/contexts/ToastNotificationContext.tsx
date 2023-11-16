@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import ToastNotification, { ToastInfoType } from "../components/ToastNotification/ToastNotification";
+import { v4 as uuidv4 } from "uuid";
 
 interface ContextReturnType {
-  updateToastList: (toastInfo: ToastInfoType) => void;
+  updateToastList: (toastInfo: Omit<ToastInfoType, "id">) => void;
   removeToast: (id: string) => void;
 }
 
@@ -17,9 +18,11 @@ export const ToastNotificationProvider = ({ children }: React.PropsWithChildren<
   const [toastList, setToastList] = React.useState<Array<ToastInfoType>>([]);
   const timerRef: React.MutableRefObject<any> = React.useRef({});
 
-  const updateToastList = (toastInfo: ToastInfoType) => {
-    timerRef.current[toastInfo.id] = autoRemoveToast(toastInfo);
-    setToastList((toastData: Array<ToastInfoType>) => [...toastData, toastInfo]);
+  const updateToastList = (toastInfo: Omit<ToastInfoType, "id">) => {
+    const currentId: string = uuidv4();
+    const info: ToastInfoType = { ...toastInfo, id: currentId };
+    timerRef.current[currentId] = autoRemoveToast(info);
+    setToastList((toastData: Array<ToastInfoType>) => [...toastData, info]);
   };
 
   const removeToast = (id: string) => {

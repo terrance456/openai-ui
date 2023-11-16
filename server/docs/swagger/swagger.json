@@ -43,14 +43,27 @@
         }
       }
     },
-    "/firebase/get-payment-history": {
+    "/stripe/get-payment-history": {
       "get": {
-        "tags": ["Firebase"],
+        "tags": ["Stripe"],
         "summary": "Get Payment history",
         "description": "Returns list of generated payments",
         "operationId": "get_payment_history",
         "responses": {
           "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PaymentHistoryResponse" } } } },
+          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
+        }
+      }
+    },
+    "/stripe/get-invoice/{id}": {
+      "get": {
+        "tags": ["Stripe"],
+        "summary": "Get invoice",
+        "description": "Returns link to invoice",
+        "operationId": "get_invoice",
+        "parameters": [{ "required": true, "schema": { "title": "Invoice Id", "type": "string" }, "name": "id", "in": "path" }],
+        "responses": {
+          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CheckoutPaymentSessionResponse" } } } },
           "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
         }
       }

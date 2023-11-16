@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { auth } from "@/src/Auth/firebase";
 import LinkButton from "../common/LinkButton/LinkButton";
 import { HomeRoutes } from "@/src/constants/route";
+import Link from "next/link";
 
 export default function ProfileDropdown() {
   const { user, userCredits, isLoadingCredits } = useAuthContext();
@@ -21,6 +22,10 @@ export default function ProfileDropdown() {
   const signOut = () => {
     auth.signOut().then();
     localStorage.removeItem("secret");
+  };
+
+  const onCloseDropdown = () => {
+    setShow(false);
   };
 
   React.useEffect(() => {
@@ -60,20 +65,13 @@ export default function ProfileDropdown() {
                   <span>{userCredits?.credits || 0}</span>
                 </div>
               )}
-              <LinkButton
-                href={HomeRoutes.Pricing}
-                onClick={() => {
-                  setShow(false);
-                }}
-                theme="light"
-                size="sm"
-              >
+              <LinkButton href={HomeRoutes.Pricing} onClick={onCloseDropdown} theme="light" size="sm">
                 Buy credits
               </LinkButton>
             </div>
-            <div className="dropdown-button" role="button">
-              Help
-            </div>
+            <Link href={HomeRoutes.Purchases} onClick={onCloseDropdown} className="dropdown-button">
+              Purchases
+            </Link>
             <div className="dropdown-button" role="button" onClick={signOut}>
               Sign out
             </div>

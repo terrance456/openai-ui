@@ -7,10 +7,8 @@ import { postCheckoutPaymentSession } from "@/src/apis";
 import { ApiRoutes } from "@/src/constants/route";
 import { ResponseCheckoutPaymentSession } from "@/src/types/post-checkout.type";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
-import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import { AxiosResponse } from "axios";
-import { onAchorTagClick } from "@/src/utils/anchor-tag-click";
 
 type PricingItemType = Omit<PricingCardProps, "onClick">;
 
@@ -19,7 +17,7 @@ const pricingItems: Array<PricingItemType> = [
     id: "501",
     title: "Pixie",
     subTitle: "Best for Stunning AI-Generated Images, personal use",
-    featureList: ["32 Images", "200 credits", "Free Download", " High Resolution images", "AI-Generated"],
+    featureList: ["200 credits", "32 Images", "Free Download", " High Resolution images", "AI-Generated"],
     price: 7,
     isDeal: "Best value",
   },
@@ -27,7 +25,7 @@ const pricingItems: Array<PricingItemType> = [
     id: "502",
     title: "Mystic",
     subTitle: "Unlock Advanced AI Creations, Priority Access",
-    featureList: ["160 Images", "1000 credits", "Free Download", " High Resolution images", "AI-Generated"],
+    featureList: ["1000 credits", "160 Images", "Free Download", " High Resolution images", "AI-Generated"],
     price: 35,
   },
 ];
@@ -43,7 +41,7 @@ export default function PricingPage() {
       copyWindow.location.href = res.data.url;
     } catch {
       copyWindow.close();
-      updateToastList({ id: uuidv4(), header: "Payment session failed", body: "Checkout payment failed, please try again later", type: ToastIndicatorType.WARNING });
+      updateToastList({ header: "Payment session failed", body: "Checkout payment failed, please try again later", type: ToastIndicatorType.WARNING });
     }
   };
 
