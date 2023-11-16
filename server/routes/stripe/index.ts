@@ -2,6 +2,8 @@ import express, { Request, Response, Router } from "express";
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import { z } from "zod";
+import { UserType } from "../firebase/type";
+import { formatPaymentHistory } from "./utils";
 
 dotenv.config();
 
@@ -41,6 +43,40 @@ router.post("/checkout-payment-session", async (req: Request, res: Response) => 
     return res.status(200).json({ url: checkoutSession.url });
   } catch (e: any) {
     return res.status(503).send({ message: "Service unavailable, please try again later" });
+  }
+});
+
+router.get("/get-payment-history", async (req: Request, res: Response) => {
+  const user: UserType = { email: res.locals.user.email, userId: res.locals.user.uid };
+
+  if (process.env.CURRENT_ENV === "dev") {
+    const mockData = (await import("../../mock/mock.json")).default;
+    return res.status(200).json(mockData);
+  }
+
+  try {
+    const paymentInformation: Stripe.PaymentIntent[] = (await stripe.paymentIntents.search({ query: `metadata[\'email\']:\'${user.email}\'` })).data;
+
+    if (paymentInformation.length > 0) {
+      const productList: Stripe.Product[] = (await fetchStripeProductList()).data;
+      return res.status(200).json(formatPaymentHistory(paymentInformation, productList));
+    }
+    return res.status(200).json([]);
+  } catch (error) {
+    res.status(400).json({ message: "Could not retrive payment history" });
+  }
+});
+
+router.get("/get-invoice/:id", async (req: Request, res: Response) => {
+  if (!req.params.id) {
+    return res.status(400).json({ message: "Missing params" });
+  }
+
+  try {
+    const invoiceInfo = await stripe.invoices.retrieve(req.params.id);
+    return res.status(200).json({ url: invoiceInfo.hosted_invoice_url });
+  } catch {
+    return res.status(400).json({ message: "Invoice doesnt exist" });
   }
 });
 
