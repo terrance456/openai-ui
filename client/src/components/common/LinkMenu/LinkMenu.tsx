@@ -22,19 +22,17 @@ export default function LinkMenu(props: LinkMenuProps) {
   const isMobile: boolean = useMobileMediaQuery();
   const { user } = useAuthContext();
 
-  return user ? (
+  return user && !isMobile ? (
     <div className="link-menu-wrapper">
-      {!isMobile && (
-        <ul className="link-menus">
-          {props.routes.map((value: RoutesType, index: number) => (
-            <li key={index}>
-              <Link href={value.route} className={classNames({ "is-selected": pathname === value.route })}>
-                {value.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="link-menus">
+        {props.routes.map((value: RoutesType, index: number) => (
+          <li key={index}>
+            <Link href={value.route} className={classNames({ "is-selected": pathname === value.route })}>
+              {value.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   ) : null;
 }

@@ -8,7 +8,7 @@ import "./navbar.scss";
 
 export default function Navbar() {
   return (
-    <nav className="navbar p-3">
+    <nav className="navbar">
       <div className="container-fluid">
         <FaReact className="nexus-logo" />
         <Link className="navbar-brand text-light" href="/home">

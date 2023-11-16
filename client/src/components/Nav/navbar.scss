@@ -2,6 +2,10 @@
 
 .navbar {
   position: static;
+  padding: 1rem 1rem !important;
+  @include media-breakpoint-down(lg) {
+    padding: 1rem 0rem !important;
+  }
   .nexus-logo {
     display: none;
     color: $white;
@@ -13,7 +17,7 @@
   .menus {
     display: flex;
     align-items: center;
-    > :first-child {
+    > .link-menu-wrapper {
       margin-right: 3rem;
       @include media-breakpoint-down(sm) {
         margin-right: 1rem;

@@ -30,6 +30,11 @@ export function getImagesIds(path: string, config?: AxiosRequestConfig) {
   return axios.get(baseUrl + path, config);
 }
 
+// firebase endpoints
+export function getPaymentHistory(path: string, config?: AxiosRequestConfig) {
+  return axios.get(baseUrl + path, config);
+}
+
 // checkout-payment-session
 export function postCheckoutPaymentSession(path: string, body: RequestCheckoutPaymentSession, config?: AxiosRequestConfig) {
   return axios.post(baseUrl + path, body, config);

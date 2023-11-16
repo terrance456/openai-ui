@@ -6,7 +6,6 @@ import { AxiosError, AxiosResponse } from "axios";
 import { ResponseImagesUrlType } from "@/src/types/image-query.type";
 import randomQuery from "../../public/query-list.json";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
-import { v4 as uuidv4 } from "uuid";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import QueryTextInput from "@/src/components/QueryTextInput/QueryTextInput";
 import QueryListImages from "@/src/components/QueryListImages/QueryListImages";
@@ -34,7 +33,7 @@ export default function Home() {
         return;
       }
       if (userCredits.credits < 25) {
-        updateToastList({ id: uuidv4(), header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
+        updateToastList({ header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
         return;
       }
       const progressId: NodeJS.Timer = progressMockLoader();
@@ -48,7 +47,6 @@ export default function Home() {
         })
         .catch(({ response }: AxiosError<any>) => {
           updateToastList({
-            id: uuidv4(),
             header: response?.statusText || "Error",
             subHeader: response?.status?.toString(),
             body: response?.data?.message || response?.data?.error?.message || "Error, please retry",

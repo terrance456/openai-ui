@@ -108,9 +108,11 @@
       }
     }
     > .dropdown-button {
+      text-decoration: none;
       font-size: 0.813rem;
       color: $gray-200;
       padding: 0.5rem 1rem;
+      display: block;
       &:hover {
         background-color: $gray-500;
         transition: background-color 0.3s;

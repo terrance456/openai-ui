@@ -4,7 +4,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/src/Auth/firebase";
 import { BsGoogle } from "react-icons/bs";
 import GlobalLoader from "@/src/components/GlobalLoader/GlobalLoader";
-import { v4 as uuidv4 } from "uuid";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import { useAuthContext } from "@/src/contexts/AuthContext";
@@ -26,7 +25,7 @@ export default function Login() {
       .then()
       .catch(() => {
         setIsLoading(false);
-        updateToastList({ id: uuidv4(), header: "Login failed", body: "Please try again to login", type: ToastIndicatorType.WARNING });
+        updateToastList({ header: "Login failed", body: "Please try again to login", type: ToastIndicatorType.WARNING });
       });
   };
 
