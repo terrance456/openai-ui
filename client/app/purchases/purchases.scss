@@ -1,0 +1,58 @@
+@import "@/styles/variables";
+
+.purchases-container {
+  .invoices-table-wrapper {
+    width: 80%;
+    max-width: 500px;
+    @include media-breakpoint-down(md) {
+      width: 100%;
+      max-width: unset;
+    }
+    table {
+      thead {
+        tr {
+          .date {
+            white-space: nowrap;
+          }
+          th {
+            color: $gray-400;
+            font-weight: 200;
+            @include media-breakpoint-down(md) {
+              font-size: $small-font-size;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          .date {
+            white-space: nowrap;
+          }
+          td {
+            font-weight: 200;
+            @include media-breakpoint-down(md) {
+              font-size: $small-font-size;
+            }
+            .badge {
+              font-weight: 200;
+            }
+            .view-btn {
+              font-size: $small-font-size;
+            }
+          }
+        }
+      }
+    }
+    .purchase-loader {
+      p {
+        span {
+          border-radius: 1rem;
+        }
+      }
+    }
+    .empty-message-text {
+      color: $gray-400;
+      font-size: $small-font-size;
+    }
+  }
+}

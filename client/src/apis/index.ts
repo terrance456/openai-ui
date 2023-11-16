@@ -30,8 +30,13 @@ export function getImagesIds(path: string, config?: AxiosRequestConfig) {
   return axios.get(baseUrl + path, config);
 }
 
-// firebase endpoints
+// stripe endpoints
 export function getPaymentHistory(path: string, config?: AxiosRequestConfig) {
+  return axios.get(baseUrl + path, config);
+}
+
+// stripe endpoints
+export function getStripeInvoice(path: string, config?: AxiosRequestConfig) {
   return axios.get(baseUrl + path, config);
 }
 
