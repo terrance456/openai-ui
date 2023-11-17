@@ -2,7 +2,7 @@
 import React from "react";
 import PageLayout from "@/src/components/common/PageLayout/PageLayout";
 import "./purchases.scss";
-import { getPaymentHistory, getStripeInvoice } from "@/src/apis";
+import { getPaymentHistory } from "@/src/apis";
 import { ApiRoutes } from "@/src/constants/route";
 import { AxiosError, AxiosResponse } from "axios";
 import { PaymentHistoryResponse } from "@/src/types/get-payment-history-type";
@@ -10,6 +10,7 @@ import { useToastNotificationContext } from "@/src/contexts/ToastNotificationCon
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import Badge from "@/src/components/common/Badge/Badge";
 import Button from "@/src/components/common/Button/Button";
+import { PricingItemType, pricingItems } from "@/src/constants/products";
 
 export default function PurchasesPage() {
   const [historyList, setHistoryList] = React.useState<Array<PaymentHistoryResponse>>([]);
@@ -29,11 +30,13 @@ export default function PurchasesPage() {
     }
   };
 
-  const onClickView = (invoiceId: string) => {
-    const locationCopy = window.open() as Window;
-    getStripeInvoice(ApiRoutes.GetInvoice.replace("{id}", invoiceId)).then((res: AxiosResponse) => {
-      locationCopy.location.href = res.data.url;
-    });
+  const formatProductName = (id: string) => {
+    return pricingItems.find((value: PricingItemType) => value.id === id)?.title || "Sparkle";
+  };
+
+  const onClickView = (url: string) => {
+    const copyLocation = window.open() as Window;
+    copyLocation.location.href = url;
   };
 
   const renderBody = () => {
@@ -54,7 +57,7 @@ export default function PurchasesPage() {
       <table className="table table-dark table-hover">
         <thead>
           <tr>
-            <th scope="col">Invoice</th>
+            <th scope="col">Item</th>
             <th scope="col">Status</th>
             <th scope="col">Amount</th>
             <th className="date" scope="col">
@@ -66,13 +69,13 @@ export default function PurchasesPage() {
         <tbody>
           {historyList.map((value: PaymentHistoryResponse, index: number) => (
             <tr key={index}>
-              <td scope="row">{index + 1}</td>
+              <td scope="row">{formatProductName(value.productId)}</td>
               <td>{paymentStatusType(value.status)}</td>
               <td>{formatCurrency.format(Math.round(value.amount / 100))}</td>
               <td className="date">{formatPurchaseDate.format(value.purchased_date * 1000)}</td>
               <td>
-                {value.invoice ? (
-                  <Button className="view-btn" theme="outline-light" size="sm" onClick={() => onClickView(value.invoice)}>
+                {value.invoiceUrl ? (
+                  <Button className="view-btn" theme="outline-light" size="sm" onClick={() => onClickView(value.invoiceUrl)}>
                     View
                   </Button>
                 ) : (

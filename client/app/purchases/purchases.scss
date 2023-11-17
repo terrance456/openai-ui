@@ -3,7 +3,7 @@
 .purchases-container {
   .invoices-table-wrapper {
     width: 80%;
-    max-width: 500px;
+    max-width: 550px;
     @include media-breakpoint-down(md) {
       width: 100%;
       max-width: unset;
@@ -38,6 +38,7 @@
             }
             .view-btn {
               font-size: $small-font-size;
+              padding: 0 0.5rem;
             }
           }
         }

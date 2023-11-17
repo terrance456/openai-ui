@@ -34,10 +34,10 @@ export default function BottomNavigation() {
         <FaReact />
         <span>Nexus</span>
       </span>
-      <span className="nav-item">
+      <Link className={classNames("nav-item", { "is-active": pathname === HomeRoutes.Purchases })} href={HomeRoutes.Purchases}>
         <CgProfile />
         <span>Profile</span>
-      </span>
+      </Link>
     </section>
   ) : null;
 }

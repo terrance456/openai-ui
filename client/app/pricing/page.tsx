@@ -2,33 +2,14 @@
 import React from "react";
 import PageLayout from "@/src/components/common/PageLayout/PageLayout";
 import "./pricing.scss";
-import PricingCard, { PricingCardProps } from "@/src/components/PricingCard/PricingCard";
+import PricingCard from "@/src/components/PricingCard/PricingCard";
 import { postCheckoutPaymentSession } from "@/src/apis";
 import { ApiRoutes } from "@/src/constants/route";
 import { ResponseCheckoutPaymentSession } from "@/src/types/post-checkout.type";
 import { useToastNotificationContext } from "@/src/contexts/ToastNotificationContext";
 import { ToastIndicatorType } from "@/src/components/ToastNotification/ToastNotification";
 import { AxiosResponse } from "axios";
-
-type PricingItemType = Omit<PricingCardProps, "onClick">;
-
-const pricingItems: Array<PricingItemType> = [
-  {
-    id: "501",
-    title: "Pixie",
-    subTitle: "Best for Stunning AI-Generated Images, personal use",
-    featureList: ["200 credits", "32 Images", "Free Download", " High Resolution images", "AI-Generated"],
-    price: 7,
-    isDeal: "Best value",
-  },
-  {
-    id: "502",
-    title: "Mystic",
-    subTitle: "Unlock Advanced AI Creations, Priority Access",
-    featureList: ["1000 credits", "160 Images", "Free Download", " High Resolution images", "AI-Generated"],
-    price: 35,
-  },
-];
+import { PricingItemType, pricingItems } from "@/src/constants/products";
 
 export default function PricingPage() {
   const { updateToastList } = useToastNotificationContext();

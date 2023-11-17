@@ -46,10 +46,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren<any>) => {
 
   React.useEffect(() => {
     if (user) {
-      user.getIdToken().then((id: string) => {
-        fetchCredits();
-        localStorage.setItem("secret", id);
-      });
+      fetchCredits();
     }
   }, [user]);
 

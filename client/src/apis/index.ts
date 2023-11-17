@@ -1,13 +1,16 @@
 import { CommonConfigs } from "@/src/constants/appConfigs";
 import ax, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { RequestCheckoutPaymentSession } from "../types/post-checkout.type";
+import { auth } from "../Auth/firebase";
 
 const baseUrl: string = CommonConfigs.baseUrl as string;
 const axios: AxiosInstance = ax.create();
 
 axios.interceptors.request.use(
-  (configs: InternalAxiosRequestConfig<any>) => {
-    configs.headers["Authorization"] = "Bearer " + localStorage.getItem("secret");
+  async (configs: InternalAxiosRequestConfig<any>) => {
+    const token: string = (await auth.currentUser?.getIdToken()) as string;
+
+    configs.headers["Authorization"] = "Bearer " + token;
     return configs;
   },
   (error) => {
@@ -32,11 +35,6 @@ export function getImagesIds(path: string, config?: AxiosRequestConfig) {
 
 // stripe endpoints
 export function getPaymentHistory(path: string, config?: AxiosRequestConfig) {
-  return axios.get(baseUrl + path, config);
-}
-
-// stripe endpoints
-export function getStripeInvoice(path: string, config?: AxiosRequestConfig) {
   return axios.get(baseUrl + path, config);
 }
 
