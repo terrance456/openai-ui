@@ -21,7 +21,6 @@ export default function ProfileDropdown() {
 
   const signOut = () => {
     auth.signOut().then();
-    localStorage.removeItem("secret");
   };
 
   const onCloseDropdown = () => {

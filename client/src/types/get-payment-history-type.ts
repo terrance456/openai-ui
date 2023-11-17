@@ -6,4 +6,5 @@ export interface PaymentHistoryResponse {
   currency: string;
   status: string;
   productId: string;
+  invoiceUrl: string;
 }

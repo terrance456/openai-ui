@@ -55,19 +55,6 @@
         }
       }
     },
-    "/stripe/get-invoice/{id}": {
-      "get": {
-        "tags": ["Stripe"],
-        "summary": "Get invoice",
-        "description": "Returns link to invoice",
-        "operationId": "get_invoice",
-        "parameters": [{ "required": true, "schema": { "title": "Invoice Id", "type": "string" }, "name": "id", "in": "path" }],
-        "responses": {
-          "200": { "description": "Successful Response", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CheckoutPaymentSessionResponse" } } } },
-          "400": { "description": "Validation Error", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HTTPValidationError" } } } }
-        }
-      }
-    },
     "/stripe/checkout-payment-session": {
       "post": {
         "tags": ["Stripe"],
@@ -164,7 +151,8 @@
           "amount": { "title": "Amount", "type": "number", "example": 5000 },
           "currency": { "title": "Currency", "type": "string", "example": "myr" },
           "status": { "title": "Status", "type": "string", "example": "succeded" },
-          "productId": { "title": "Product id", "type": "number", "example": 1500 }
+          "productId": { "title": "Product id", "type": "number", "example": 1500 },
+          "invoiceUrl": { "title": "Invoice url", "type": "string", "example": ".com" }
         }
       }
     },

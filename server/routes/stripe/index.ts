@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import dotenv from "dotenv";
 import { z } from "zod";
 import { UserType } from "../firebase/type";
-import { formatPaymentHistory } from "./utils";
+import { FormattedPaymentHistory, formatPaymentHistory, formatPaymentHistoryWithInvoices } from "./utils";
 
 dotenv.config();
 
@@ -49,34 +49,21 @@ router.post("/checkout-payment-session", async (req: Request, res: Response) => 
 router.get("/get-payment-history", async (req: Request, res: Response) => {
   const user: UserType = { email: res.locals.user.email, userId: res.locals.user.uid };
 
-  if (process.env.CURRENT_ENV === "dev") {
-    const mockData = (await import("../../mock/mock.json")).default;
-    return res.status(200).json(mockData);
-  }
-
   try {
     const paymentInformation: Stripe.PaymentIntent[] = (await stripe.paymentIntents.search({ query: `metadata[\'email\']:\'${user.email}\'` })).data;
 
-    if (paymentInformation.length > 0) {
-      const productList: Stripe.Product[] = (await fetchStripeProductList()).data;
-      return res.status(200).json(formatPaymentHistory(paymentInformation, productList));
+    if (paymentInformation.length < 1) {
+      return res.status(200).json([]);
     }
-    return res.status(200).json([]);
+
+    const productList: Stripe.Product[] = (await fetchStripeProductList()).data;
+    const historyList: FormattedPaymentHistory[] = formatPaymentHistory(paymentInformation, productList);
+    const invoicesHandler = historyList.filter((v) => !!v.invoice).map((v) => stripe.invoices.retrieve(v.invoice as string));
+    const invoicesResult: Stripe.Invoice[] = await Promise.all(invoicesHandler);
+
+    return res.status(200).json(formatPaymentHistoryWithInvoices(historyList, invoicesResult));
   } catch (error) {
     res.status(400).json({ message: "Could not retrive payment history" });
-  }
-});
-
-router.get("/get-invoice/:id", async (req: Request, res: Response) => {
-  if (!req.params.id) {
-    return res.status(400).json({ message: "Missing params" });
-  }
-
-  try {
-    const invoiceInfo = await stripe.invoices.retrieve(req.params.id);
-    return res.status(200).json({ url: invoiceInfo.hosted_invoice_url });
-  } catch {
-    return res.status(400).json({ message: "Invoice doesnt exist" });
   }
 });
 
