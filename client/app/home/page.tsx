@@ -36,6 +36,9 @@ export default function Home() {
         updateToastList({ header: "Insufficient credits", subHeader: "Credits", body: "Please purchase more credits to get more image", type: ToastIndicatorType.WARNING });
         return;
       }
+      if (isLoading) {
+        return;
+      }
       const progressId: NodeJS.Timer = progressMockLoader();
       setisLoading(true);
       setImageUrls([]);
@@ -105,7 +108,7 @@ export default function Home() {
 
   return (
     <div className="home-wrapper">
-      <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} />
+      <QueryTextInput text={text} setText={setText} onSearch={fetchOpenAi} onRandomQuery={generateRandomQuery} isLoading={isLoading} />
       {renderBody()}
     </div>
   );
